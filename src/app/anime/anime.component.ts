@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Anime} from "../anime.model";
 
 @Component({
   selector: 'app-anime',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnimeComponent  implements OnInit {
 
+  @Input() anime!: Anime
   constructor() { }
 
   ngOnInit() {}

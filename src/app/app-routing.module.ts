@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'explore',
     loadChildren: () => import('./explore/explore.module').then( m => m.ExplorePageModule)
   },
+  {
+    path: 'watchlist',
+    loadChildren: () => import('./watchlist/watchlist.module').then( m => m.WatchlistPageModule)
+  },
 ];
 
 @NgModule({
