@@ -41,4 +41,8 @@ export class AnimeService {
       return animes;
     }));
   }
+
+  getAnime(id: string) {
+    return this.animes.find((a) => a.id === id)
+  }
 }

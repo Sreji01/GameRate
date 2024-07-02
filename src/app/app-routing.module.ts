@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'watchlist',
     loadChildren: () => import('./watchlist/watchlist.module').then( m => m.WatchlistPageModule)
   },
+  {
+    path: 'explore/anime-details/:id',
+    loadChildren: () => import('./anime-details/anime-details.module').then( m => m.AnimeDetailsPageModule)
+  },
 ];
 
 @NgModule({
