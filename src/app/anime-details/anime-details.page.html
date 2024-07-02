@@ -1,0 +1,71 @@
+<ion-content>
+  <ion-card class="anime-details">
+    <div>
+      <div class="anime-poster">
+        <ion-button fill="clear" class="back-button" (click)="goBack()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+        <img src="{{anime?.posterUrl}}" alt="{{anime?.title}}">
+      </div>
+      <div class="anime-info">
+        <h1 class="anime-title">{{anime?.title}}</h1>
+        <p class="anime-year">{{anime?.year}}</p>
+        <p class="anime-description">
+          {{anime?.description}}
+        </p>
+      </div>
+    </div>
+
+  </ion-card>
+  <br>
+  <ion-card class="review-section">
+    <ion-grid>
+
+      <ion-row>
+        <ion-col>
+          <h2>Your review:</h2>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Review Headline</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Review Content</ion-label>
+            <br>
+            <ion-textarea class="review-textarea"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <h4>Your rating:</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <div class="rating">
+            <ion-icon *ngFor="let star of starsArray" [name]="getStarIcon(star)" (click)="toggleRating(star)" style="cursor: pointer;"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-xs="8" size-md="4" size-lg="4" size-xl="5">
+          <ion-button type="submit" color="primary" shape="round" expand="block">Submit Review</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </ion-card>
+</ion-content>
