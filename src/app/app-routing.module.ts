@@ -18,7 +18,15 @@ const routes: Routes = [
   {
     path: 'explore/anime-details/:id',
     loadChildren: () => import('./anime-details/anime-details.module').then( m => m.AnimeDetailsPageModule)
+  },  {
+    path: 'register',
+    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'log-in',
+    loadChildren: () => import('./auth/log-in/log-in.module').then( m => m.LogInPageModule)
+  },
+
 ];
 
 @NgModule({

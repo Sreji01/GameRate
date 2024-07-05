@@ -39,3 +39,22 @@
 ion-app {
   --ion-background-color: #2d2d2f;
 }
+
+.custom-item {
+  --border-color: var(--ion-color-secondary);
+}
+
+.custom-input {
+  color: var(--ion-color-primary);
+}
+
+.custom-label {
+  color: var(--ion-color-secondary);
+}
+
+.custom-item.ion-invalid {
+  --border-color: var(--ion-color-danger);
+}
+.custom-item.ion-valid {
+  --border-color: var(--ion-color-success);
+}
