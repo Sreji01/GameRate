@@ -20,74 +20,81 @@
   .anime-details {
     max-width: 60%;
   }
-  .review-section{
+  .review-section {
     max-width: 40%;
   }
 }
 
 .anime-poster {
   width: 100%;
-  height: 60vh; /* 60% of the viewport height */
-  overflow: hidden; /* Ensures the image doesn't exceed the height */
+  height: 60vh;
+  overflow: hidden;
 }
 
 .anime-poster img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures the image fills the container */
+  object-fit: cover;
   position: relative;
 }
 
 .anime-info {
   flex: 1;
-  margin: 20px; /* Adjust spacing as needed */
+  margin: 20px;
 }
 
 .anime-title {
   font-size: 24px;
   margin-bottom: 10px;
+  color: var(--ion-color-primary);
 }
 
 .anime-year {
   font-size: 18px;
   margin-bottom: 10px;
+  color: var(--ion-color-secondary);
+}
+
+.anime-description {
+  color: var(--ion-color-secondary);
+  position: relative;
+  padding-bottom: 35px;
 }
 
 .rating ion-icon {
-  font-size: 24px; /* Adjust the font size of the stars */
-  color: #ffd700; /* Set the default color of the stars */
+  font-size: 24px;
+  color: #ffd700;
 }
 
 .rating ion-icon.star {
-  color: #ffd700; /* Set the color of filled stars */
+  color: #ffd700;
 }
 
 .back-button {
   position: fixed;
-  top: 2.5px; /* Adjust the top position as needed */
-  left: 4.5px; /* Adjust the left position as needed */
-  z-index: 2; /* Ensure the button appears above the image */
-  font-size: 20px; /* Adjust the font size as needed */
-  padding-left: 4.5px; /* Adjust the padding as needed */
+  top: 2.5px;
+  left: 4.5px;
+  z-index: 2;
+  font-size: 20px;
+  padding-left: 4.5px;
   padding-top: 2.5px;
-  color: var(--ion-color-primary); /* Set text color to primary color */
-  background-color: transparent; /* Make the button background transparent */
-  border: none; /* Remove button border */
+  color: var(--ion-color-primary);
+  background-color: transparent;
+  border: none;
   display: none;
 }
 
-/* Pseudo-element for the black circle */
 .back-button::before {
   content: '';
   position: absolute;
-  top: 5px; /* Adjust the position of the circle */
-  left: 19px; /* Adjust the position of the circle */
-  width: 40px; /* Adjust the size of the circle */
+  top: 5px;
+  left: 19px;
+  width: 40px;
   height: 40px;
-  border-radius: 50%; /* Make the circle round */
-  background-color: black; /* Set the color of the circle */
-  opacity: 0.8; /* Adjust the opacity of the circle */
-  z-index: -1; /* Ensure the circle is behind the button */
+  border-radius: 50%;
+  background-color: black;
+  opacity: 0.8;
+  z-index: -1;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -97,3 +104,39 @@
     display: block;
   }
 }
+
+.review-section h2 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.review-section .review-textarea {
+  border: 1px solid var(--ion-color-secondary);
+  border-radius: 4px;
+  padding: 8px;
+  min-height: 150px;
+}
+
+.your-review {
+  color: var(--ion-color-primary);
+}
+
+.your-rating{
+  color: var(--ion-color-primary);
+}
+
+.watchlist-button {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 2px;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.textarea-item{
+  color: var(--ion-color-primary);
+}
+

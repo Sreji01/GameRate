@@ -2,6 +2,6 @@
   <ion-img src="{{anime.imageUrl}}" alt="{{anime.title}}" class="anime-image"></ion-img>
   <div class="anime-info">
     <div class="anime-title">{{anime.title}}</div>
-    <ion-icon name="add-circle-outline" class="watchlist-icon"></ion-icon>
+    <ion-icon name="add-circle-outline" class="watchlist-icon" (click)="openAlert($event)"></ion-icon>
   </div>
 </div>

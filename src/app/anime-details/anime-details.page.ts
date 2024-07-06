@@ -13,6 +13,8 @@ export class AnimeDetailsPage implements OnInit {
   anime!: Anime
   starsArray: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
   animeRating: number;
+  reviewHeadline!: string;
+  reviewContent!: string;
   constructor(private route: ActivatedRoute, private animeService: AnimeService, private location: Location) {
     this.animeRating = 0;
   }

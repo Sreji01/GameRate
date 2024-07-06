@@ -5,17 +5,19 @@
         <ion-button fill="clear" class="back-button" (click)="goBack()">
           <ion-icon name="arrow-back"></ion-icon>
         </ion-button>
-        <img src="{{anime?.posterUrl}}" alt="{{anime?.title}}">
+        <img src="{{anime.posterUrl}}" alt="{{anime.title}}">
       </div>
       <div class="anime-info">
-        <h1 class="anime-title">{{anime?.title}}</h1>
-        <p class="anime-year">{{anime?.year}}</p>
+        <h1 class="anime-title">{{anime.title}}</h1>
+        <p class="anime-year">{{anime.year}}</p>
         <p class="anime-description">
-          {{anime?.description}}
+          {{anime.description}}
         </p>
       </div>
+      <div class="watchlist-button">
+        <ion-button color="primary">Add to Watchlist</ion-button>
+      </div>
     </div>
-
   </ion-card>
   <br>
   <ion-card class="review-section">
@@ -23,32 +25,32 @@
 
       <ion-row>
         <ion-col>
-          <h2>Your review:</h2>
+          <h2 class="your-review">Your review:</h2>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-label position="stacked">Review Headline</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-label position="stacked" color="secondary">Review Headline</ion-label>
+            <ion-input type="text" class="custom-input" [(ngModel)]="reviewHeadline"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <ion-item>
-            <ion-label position="stacked">Review Content</ion-label>
+          <ion-item class="textarea-item">
+            <ion-label position="stacked" color="secondary">Review Content</ion-label>
             <br>
-            <ion-textarea class="review-textarea"></ion-textarea>
+            <ion-textarea [(ngModel)]="reviewContent" class="review-textarea"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <h4>Your rating:</h4>
+          <h4 class="your-rating">Your rating:</h4>
         </ion-col>
       </ion-row>
 
@@ -61,11 +63,12 @@
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
-        <ion-col size-xs="8" size-md="4" size-lg="4" size-xl="5">
+        <ion-col size-xs="9" size-md="5" size-lg="5" size-xl="6">
           <ion-button type="submit" color="primary" shape="round" expand="block">Submit Review</ion-button>
         </ion-col>
       </ion-row>
 
     </ion-grid>
   </ion-card>
+  <br>
 </ion-content>
