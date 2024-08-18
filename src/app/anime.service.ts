@@ -21,7 +21,7 @@ export class AnimeService {
   constructor(private http: HttpClient) { }
 
   getAnimes(){
-    return this.http.get<{[key: string]: AnimeData }>(this.dbUrl).
+    return this.http.get<{[key: string]: Anime }>(this.dbUrl).
     pipe(map( (animesData) => {
       const animes: Anime[] = [];
 
@@ -33,7 +33,8 @@ export class AnimeService {
             year: animesData[key].year,
             imageUrl: animesData[key].imageUrl,
             posterUrl: animesData[key].posterUrl,
-            description: animesData[key].description
+            description: animesData[key].description,
+            rating: animesData[key].rating
           });
         }
       }

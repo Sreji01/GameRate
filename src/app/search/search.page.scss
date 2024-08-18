@@ -1,0 +1,59 @@
+.searchbar-container {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+.custom-searchbar {
+  width: 80%;
+  max-width: 600px;
+}
+
+.list-container {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  width: 100%;
+}
+
+.list-wrapper {
+  width: 80%;
+  max-width: 600px;
+  height: 70vh;
+  overflow-y: auto;
+  margin: 0 auto;
+}
+
+.custom-list {
+  width: 100%;
+}
+
+.custom-search-item {
+  cursor: pointer;
+}
+
+.anime-search-title {
+  color: var(--ion-color-primary);
+}
+
+.anime-search-year {
+  color: var(--ion-color-secondary);
+}
+
+.anime-search-rating {
+  color: var(--ion-color-secondary);
+  margin: 0;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+}
+
+.rating-container ion-icon {
+  margin-right: 4px;
+  margin-top: -4px;
+  color: #ffd700;
+}
+
+

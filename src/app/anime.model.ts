@@ -5,4 +5,6 @@ export interface Anime {
   imageUrl: string;
   posterUrl: string;
   description: string;
+  rating: number;
 }
+

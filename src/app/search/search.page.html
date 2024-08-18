@@ -1,0 +1,34 @@
+<ion-content [fullscreen]="true">
+  <div class="searchbar-container">
+    <ion-searchbar
+      class="custom-searchbar"
+      animated="true"
+      placeholder="Search animes"
+      color="secondary"
+      show-cancel-button="focus"
+      [(ngModel)]="searchTerm"
+      (ionInput)="filterAnimes()">
+    </ion-searchbar>
+  </div>
+
+  <div class="list-container">
+    <div class="list-wrapper">
+      <ion-list class="custom-list">
+        <ion-item *ngFor="let anime of filteredAnimes" (click)="navigateToDetails(anime.id, $event)" class="custom-search-item">
+          <ion-thumbnail slot="start">
+            <img [src]="anime.imageUrl" alt="{{anime.title}}">
+          </ion-thumbnail>
+          <ion-label>
+            <h2 class="anime-search-title">{{ anime.title }}</h2>
+            <p class="anime-search-year">{{ anime.year }}</p>
+            <div class="rating-container">
+              <ion-icon name="star"></ion-icon>
+              <p class="anime-search-rating" *ngIf="anime.rating > 0">{{ anime.rating | number: '1.1-1' }}</p>
+              <p class="anime-search-rating" *ngIf="anime.rating === 0">N/A</p>
+            </div>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
