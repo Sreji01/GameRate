@@ -1,13 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>log-in</ion-title>
+    <ion-buttons slot="end">
+      <ion-label color="secondary">New user?</ion-label>
+      <ion-button class="button" type="button" expand="block" color="primary" shape="round" (click)="onNavigateToSignUp()">Sign Up</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form #logInForm="ngForm">
+  <form #logInForm="ngForm" (ngSubmit)="onLogIn(logInForm)">
     <ion-grid>
-
       <ion-row class="ion-justify-content-center">
         <ion-col size-sm="4" size-md="6" size-lg="6" sizeXl="4">
           <ion-list>
@@ -15,13 +17,16 @@
               <ion-label position="floating" color="secondary">Email</ion-label>
               <ion-input type="email" class="custom-input" ngModel name="email" required email #email="ngModel"></ion-input>
             </ion-item>
+
             <ion-item lines="none" *ngIf="email.invalid && email.value">
               <ion-label color="danger">Email address is not in the correct format!</ion-label>
             </ion-item>
+
             <ion-item class="custom-item">
               <ion-label position="floating" color="secondary">Password</ion-label>
               <ion-input type="password" class="custom-input" ngModel name="password" required minlength="8" #password="ngModel"></ion-input>
             </ion-item>
+
             <ion-item lines="none" *ngIf="password.invalid && password.value">
               <ion-label color="danger">Password should have at least 8 characters!</ion-label>
             </ion-item>
@@ -29,10 +34,18 @@
         </ion-col>
       </ion-row>
 
+      <div class="ion-text-center">
+        <ion-spinner color="primary" *ngIf="isLoading"></ion-spinner>
+      </div>
+
       <ion-row class="ion-justify-content-center">
-        <ion-col size-xs="8" size-md="4" size-lg="4" size-xl="2">
-          <ion-button type="submit" color="primary" shape="round" expand="block" [disabled]="logInForm.invalid">Log In</ion-button>
+        <ion-col size-xs="8" size-md="4" size-lg="4" size-xl="3">
+          <ion-button type="submit" color="primary" shape="round" expand="block" [disabled]="logInForm.invalid" *ngIf="!isLoading">Log In</ion-button>
         </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center" *ngIf="errorMessage">
+        <ion-label color="danger">{{ errorMessage }}</ion-label>
       </ion-row>
     </ion-grid>
   </form>
