@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .review-section {
@@ -16,7 +16,7 @@
   flex-direction: row;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 760px) {
   .anime-details {
     max-width: 60%;
   }
@@ -25,40 +25,63 @@
   }
 }
 
+@media screen and (min-width: 768px) and (max-width: 900px) {
+  .anime-details {
+    max-width: 80%;
+  }
+  .review-section {
+    max-width: 60%;
+  }
+}
+
 .anime-poster {
   width: 100%;
   height: 60vh;
   overflow: hidden;
+  margin-bottom: 5px;
 }
 
 .anime-poster img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: relative;
+  display: block;
 }
-
 .anime-info {
-  flex: 1;
-  margin: 20px;
+  width: 100%;
+  padding: 8px 12px 0 12px;
 }
 
 .anime-title {
   font-size: 24px;
-  margin-bottom: 10px;
+  margin-top: 0;
+  margin-bottom: 8px;
   color: var(--ion-color-primary);
 }
 
 .anime-year {
   font-size: 18px;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 4px;
   color: var(--ion-color-secondary);
+}
+
+.anime-rating {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  color: var(--ion-color-secondary);
+}
+
+.slash-ten{
+  font-size: 15px;
+  margin-top: 12px;
+  margin-bottom: 4px;
 }
 
 .anime-description {
   color: var(--ion-color-secondary);
-  position: relative;
-  padding-bottom: 35px;
+  padding-bottom: 1px;
 }
 
 .rating ion-icon {
@@ -122,7 +145,7 @@
   color: var(--ion-color-primary);
 }
 
-.your-rating{
+.your-rating {
   color: var(--ion-color-primary);
 }
 
@@ -133,10 +156,85 @@
   bottom: 2px;
   width: 100%;
   text-align: center;
-  padding-bottom: 5px;
 }
 
-.textarea-item{
+.textarea-item {
   color: var(--ion-color-primary);
+}
+
+.edit-icon {
+  padding-top: 8px;
+  font-size: 1.7em;
+  width: 1.7em;
+  height: 1.7em;
+}
+
+.delete-icon {
+  padding-top: 8px;
+  font-size: 1.7em;
+  width: 1.7em;
+  height: 1.7em;
+  cursor: pointer;
+}
+
+.headline-input {
+  --border-color: var(--ion-color-secondary);
+}
+
+.icon-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon-wrapper-watchlist {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  margin-top: -13px;
+}
+
+.edit-icon {
+  font-size: 24px;
+}
+
+.edit-text {
+  visibility: hidden;
+  width: auto;
+  background-color: #2d2d2f;
+  color: var(--ion-color-primary);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  top: 47px;
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+.icon-wrapper:hover .edit-text {
+  visibility: visible;
+}
+
+.icon-wrapper-watchlist:hover .edit-text {
+  visibility: visible;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+}
+
+.rating-container ion-icon {
+  margin-right: 4px;
+  margin-top: 4px;
+  font-size: 24px;
+  margin-bottom: 4px;
+  color: #ffd700;
 }
 

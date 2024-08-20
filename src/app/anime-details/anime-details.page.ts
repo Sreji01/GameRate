@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Anime} from "../anime.model";
 import {ActivatedRoute} from "@angular/router";
 import {AnimeService} from "../anime.service";
 import { Location } from '@angular/common';
+import {WatchlistService} from "../watchlist.service";
+import {AlertController} from "@ionic/angular";
 
 @Component({
   selector: 'app-anime-details',
@@ -12,12 +14,19 @@ import { Location } from '@angular/common';
 export class AnimeDetailsPage implements OnInit {
   anime!: Anime
   starsArray: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
-  animeRating: number;
+  animeRating: number = 0;
   reviewHeadline!: string;
   reviewContent!: string;
-  constructor(private route: ActivatedRoute, private animeService: AnimeService, private location: Location) {
-    this.animeRating = 0;
-  }
+  isInWatchlist: boolean = false;
+  @Output() animeRemoved = new EventEmitter<string>();
+
+  constructor(
+    private route: ActivatedRoute,
+    private animeService: AnimeService,
+    private location: Location,
+    private alertCtrl: AlertController,
+    private watchlistService: WatchlistService
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -39,4 +48,33 @@ export class AnimeDetailsPage implements OnInit {
   toggleRating(index: number): void {
     this.animeRating = index + 1;
   }
+
+  async openAlert(event: MouseEvent) {
+
+    if (this.isInWatchlist) {
+      this.watchlistService.removeFromWatchlist(this.anime.id).subscribe(async () => {
+        this.isInWatchlist = false;
+        this.animeRemoved.emit(this.anime.id);
+
+        const alert = await this.alertCtrl.create({
+          message: "Removed from the Watchlist!",
+          buttons: ['OK'],
+          cssClass: 'custom-alert'
+        });
+        await alert.present();
+      });
+    } else {
+      this.watchlistService.addToWatchlist(this.anime).subscribe(async () => {
+        this.isInWatchlist = true;
+
+        const alert = await this.alertCtrl.create({
+          message: "Added to the Watchlist!",
+          buttons: ['OK'],
+          cssClass: 'custom-alert'
+        });
+        await alert.present();
+      });
+    }
+  }
+  protected readonly event = event;
 }

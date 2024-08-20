@@ -5,6 +5,7 @@
     <div class="small-title" *ngIf="anime.title === 'Bleach: Thousand-Year Blood War'">{{anime.title}}</div>
     <div class="mid-title" *ngIf="anime.title === 'Fullmetal Alchemist: Brotherhood'">{{anime.title}}</div>
     <div class="mid-title" *ngIf="anime.title === 'Boruto: Naruto Next Generations'">{{anime.title}}</div>
-    <ion-icon name="add-circle-outline" class="watchlist-icon" (click)="openAlert($event)"></ion-icon>
+    <ion-icon *ngIf="!isInWatchlist" name="add-circle-outline" class="watchlist-icon" (click)="openAlert($event)"></ion-icon>
+    <ion-icon *ngIf="isInWatchlist" name="remove-circle-outline" class="watchlist-icon" (click)="openAlert($event)"></ion-icon>
   </div>
 </div>
