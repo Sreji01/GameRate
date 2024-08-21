@@ -41,55 +41,78 @@
     </div>
   </ion-card>
   <br>
+
   <ion-card class="review-section">
     <ion-grid>
+      <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+        <ion-row>
+          <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="5" size-xs="6">
+            <h2 class="your-review">Your review:</h2>
+          </ion-col>
+          <ion-col offset-xl="6.4" offset-lg="4.5" offset-md="3.8" offset-sm="5" offset-xs="4">
+            <div *ngIf="showEditIcon" class="icon-wrapper" (click)="onEdit()">
+              <ion-icon name="create" class="edit-icon" color="primary"></ion-icon>
+              <span class="edit-text">EDIT</span>
+            </div>
+            <div *ngIf="showCancelIcon" class="icon-wrapper" (click)="onCancel()">
+              <ion-icon name="close-circle-outline" class="edit-icon" color="primary"></ion-icon>
+              <span class="edit-text">CANCEL</span>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item class="headline-input">
+              <ion-label position="stacked" color="secondary">Review Headline</ion-label>
+              <ion-input type="text" class="custom-input" formControlName="reviewHeadline" [disabled]="disableHeadlineInput"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <h2 class="your-review">Your review:</h2>
-        </ion-col>
-      </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item class="textarea-item">
+              <ion-label position="stacked" color="secondary">Review Content</ion-label>
+              <br>
+              <ion-textarea formControlName="reviewContent" class="review-textarea" [disabled]="disableContentInput"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" color="secondary">Review Headline</ion-label>
-            <ion-input type="text" class="custom-input" [(ngModel)]="reviewHeadline"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+        <ion-row>
+          <ion-col>
+            <h4 class="your-rating">Your rating:</h4>
+          </ion-col>
+        </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <ion-item class="textarea-item">
-            <ion-label position="stacked" color="secondary">Review Content</ion-label>
-            <br>
-            <ion-textarea [(ngModel)]="reviewContent" class="review-textarea"></ion-textarea>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+        <ion-row>
+          <ion-col size-xl="6" size-lg="8" size-md="10.1" size-sm="7" size-xs="9">
+            <div class="rating">
+              <ion-icon *ngFor="let star of starsArray" [name]="getStarIcon(star)" (click)="toggleRating(star)" style="cursor: pointer;"></ion-icon>
+            </div>
+          </ion-col>
+          <ion-col offset-xl="4.4" offset-lg="1" offset-md="0" offset-sm=4 offset-xs="0.6">
+            <div *ngIf="showDeleteIcon" class="icon-wrapper" (click)="openDeleteQuestion()">
+              <ion-icon name="trash-outline" class="edit-icon" color="primary"></ion-icon>
+              <span class="edit-text">DELETE</span>
+              <br>
+            </div>
+          </ion-col>
+        </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <h4 class="your-rating">Your rating:</h4>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <div class="rating">
-            <ion-icon *ngFor="let star of starsArray" [name]="getStarIcon(star)" (click)="toggleRating(star)" style="cursor: pointer;"></ion-icon>
-          </div>
-        </ion-col>
-      </ion-row>
-
-      <ion-row class="ion-justify-content-center">
-        <ion-col size-xs="9" size-md="5" size-lg="5" size-xl="6">
-          <ion-button type="submit" color="primary" shape="round" expand="block">Submit Review</ion-button>
-        </ion-col>
-      </ion-row>
-
+        <ion-row class="ion-justify-content-center">
+          <ion-col size-xs="8" size-md="7" size-lg="6" size-xl="6" size-sm="3">
+            <ion-button type="submit" color="primary" shape="round" expand="block" [disabled]="!isFormValid" *ngIf="showSubmitButton">Submit Review</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size-xs="8" size-md="7" size-lg="6" size-xl="6" size-sm="3">
+            <ion-button type="submit" color="primary" shape="round" expand="block" [disabled]="!isFormValid" *ngIf="showEditButton">Edit Review</ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
     </ion-grid>
   </ion-card>
+
   <br>
 </ion-content>

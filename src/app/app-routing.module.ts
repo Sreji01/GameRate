@@ -4,33 +4,41 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'explore',
+    redirectTo: 'log-in',
     pathMatch: 'full'
   },
   {
     path: 'explore',
-    loadChildren: () => import('./explore/explore.module').then( m => m.ExplorePageModule)
+    loadChildren: () => import('./explore/explore.module').then(m => m.ExplorePageModule),
   },
   {
     path: 'watchlist',
-    loadChildren: () => import('./watchlist/watchlist.module').then( m => m.WatchlistPageModule)
+    loadChildren: () => import('./watchlist/watchlist.module').then(m => m.WatchlistPageModule),
   },
   {
     path: 'explore/anime-details/:id',
-    loadChildren: () => import('./anime-details/anime-details.module').then( m => m.AnimeDetailsPageModule)
-  },  {
-    path: 'register',
-    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./anime-details/anime-details.module').then(m => m.AnimeDetailsPageModule),
+  },
+  {
+    path: 'search/anime-details/:id',
+    loadChildren: () => import('./anime-details/anime-details.module').then(m => m.AnimeDetailsPageModule),
+  },
+  {
+    path: 'watchlist/anime-details/:id',
+    loadChildren: () => import('./anime-details/anime-details.module').then(m => m.AnimeDetailsPageModule),
   },
   {
     path: 'log-in',
-    loadChildren: () => import('./auth/log-in/log-in.module').then( m => m.LogInPageModule)
+    loadChildren: () => import('./auth/log-in/log-in.module').then(m => m.LogInPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule)
   },
   {
     path: 'search',
-    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
-  },
-
+    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule),
+  }
 ];
 
 @NgModule({
