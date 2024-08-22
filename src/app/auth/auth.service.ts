@@ -120,4 +120,36 @@ export class AuthService {
       })
     );
   }
+
+  getUserData(userId: string) {
+    return this.http.get<UserData>(`${this.dbUrl}/${userId}.json`).pipe(
+      map(data => {
+        if (data) {
+          return {
+            email: data.email,
+            username: data.username,
+            name: data.name,
+            surname: data.surname,
+            password: data.password
+          };
+        } else {
+          throw new Error('User data not found');
+        }
+      }),
+      catchError(error => {
+        console.error('Error fetching user data:', error);
+        return throwError('Failed to fetch user data');
+      })
+    );
+  }
+
+  logOut() {
+    this.isLoading.next(true);
+    setTimeout(() => {
+      this._user.next(null);
+      this.isLoading.next(false);
+      this.router.navigateByUrl('/log-in');
+      window.dispatchEvent(new Event('logout'));
+    }, 1000);
+  }
 }

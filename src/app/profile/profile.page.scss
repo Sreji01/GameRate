@@ -1,0 +1,41 @@
+.profile-title {
+  text-align: center;
+  margin: 20px 0;
+
+  h1 {
+    font-size: 2rem;
+    color: var(--ion-color-primary);
+  }
+}
+
+.profile-details-subtitle {
+  margin: 20px auto 10px auto;
+  max-width: 660px;
+  padding-left: 2%;
+
+  h4 {
+    font-size: 1.4rem;
+    text-align: left;
+    color: var(--ion-color-primary);
+  }
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+
+  ion-list {
+    width: 95%;
+    justify-content: center;
+  }
+}
+
+ion-header {
+  display: none;
+}
+
+.profile-input{
+  color: var(--ion-color-primary);
+  margin-top: 10px;
+}
