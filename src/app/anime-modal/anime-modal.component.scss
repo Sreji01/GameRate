@@ -1,3 +1,105 @@
-.close-modal-icon{
+.close-modal-icon {
   font-size: 30px;
 }
+
+.searchbar-container {
+  display: flex;
+  justify-content: center;
+}
+
+.custom-searchbar {
+  width: 80%;
+  max-width: 600px;
+}
+
+.list-container {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+}
+
+.custom-list {
+  width: 80%;
+  max-width: 600px;
+}
+
+.custom-search-item {
+  cursor: pointer;
+}
+
+.anime-search-title {
+  color: var(--ion-color-primary);
+}
+
+.anime-search-year {
+  color: var(--ion-color-secondary);
+}
+
+.custom-list .custom-search-item.selected {
+  background-color: var(--ion-color-primary);
+  border-radius: 6px;
+  padding: 2px;
+  cursor: default;
+}
+
+.custom-list .custom-search-item.selected ion-icon {
+  cursor: pointer;
+}
+
+.custom-list .custom-search-item.hidden {
+  display: none;
+}
+
+.rating ion-icon {
+  font-size: 22px;
+  color: #ffd700;
+}
+
+.rating ion-icon.star {
+  color: #ffd700;
+}
+
+.review-section h2 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.review-section .review-textarea {
+  border: 1px solid var(--ion-color-secondary);
+  border-radius: 4px;
+  padding: 8px;
+  min-height: 150px;
+}
+
+.your-review {
+  color: var(--ion-color-primary);
+}
+
+.your-rating {
+  color: var(--ion-color-primary);
+}
+
+.textarea-item {
+  color: var(--ion-color-primary);
+}
+
+.headline-input {
+  --border-color: var(--ion-color-secondary);
+}
+
+.anime-search-rating{
+  color: var(--ion-color-secondary);
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+}
+
+.rating-container ion-icon {
+  margin-right: 4px;
+  margin-top: -4px;
+  color: #ffd700;
+}
+
