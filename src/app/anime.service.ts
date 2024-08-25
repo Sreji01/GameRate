@@ -3,22 +3,19 @@ import {Anime} from "./anime.model";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 
-interface AnimeData{
-  id: string,
-  title: string,
-  year: number,
-  description: string,
-  imageUrl: string,
-  posterUrl:string
-}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AnimeService {
 
-  animes!: Anime[];
+  animes: Anime[] = [];
   dbUrl: string = "https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/animes.json"
   constructor(private http: HttpClient) { }
+
+  getAnime(id: string) {
+    return this.animes.find((a) => a.id === id)
+  }
 
   getAnimes(){
     return this.http.get<{[key: string]: Anime }>(this.dbUrl).
@@ -42,8 +39,6 @@ export class AnimeService {
       return animes;
     }));
   }
-
-  getAnime(id: string) {
-    return this.animes.find((a) => a.id === id)
-  }
 }
+
+

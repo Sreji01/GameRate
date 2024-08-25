@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from "@angular/router";
-import {AnimeModalComponent} from "./anime-modal/anime-modal.component";
-import {ModalController} from "@ionic/angular";
+import { ModalController } from "@ionic/angular";
+import { AnimeModalComponent } from "./anime-modal/anime-modal.component";
+import {AuthService} from "./auth/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,9 @@ export class AppComponent implements OnInit {
   shouldShowHeader: boolean = true;
   shouldShowTabBar: boolean = true;
   modalIsOpen: boolean = false;
+  username: string = '';
 
-  constructor(private router: Router, private modalCtrl: ModalController) {
+  constructor(private router: Router, private modalCtrl: ModalController, private authService: AuthService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.checkCurrentRoute(event.urlAfterRedirects || event.url);
@@ -23,6 +25,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.checkCurrentRoute(this.router.url);
+    this.authService.userId.subscribe(userId => {
+      if (userId) {
+        this.authService.getUserData(userId).subscribe(
+          userData => {
+            this.username = userData.username || '';
+          },
+          error => {
+            console.error('Failed to fetch user data:', error);
+          }
+        );
+      }
+    });
   }
 
   private checkCurrentRoute(url: string) {

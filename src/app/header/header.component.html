@@ -1,8 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-row>
+    <ion-row class="ion-justify-content-between">
       <ion-col size="auto">
         <ion-title class="clickable-title" routerLink="/explore" color="secondary">Home</ion-title>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-title color="primary">
+          <span class="span">Welcome </span>
+          <span (click)="presentPopover($event)" class="clickable-username">{{ username }}</span>
+        </ion-title>
       </ion-col>
     </ion-row>
   </ion-toolbar>

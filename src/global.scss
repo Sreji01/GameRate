@@ -44,22 +44,22 @@ ion-app {
   --border-color: var(--ion-color-secondary);
 }
 
+.custom-item.ion-invalid {
+  --border-color: var(--ion-color-danger);
+}
+
+.custom-item.ion-valid {
+  --border-color: var(--ion-color-success);
+}
+
 .custom-input {
   color: var(--ion-color-primary);
+  margin-top: 5px;
 }
 
 .custom-label {
   color: var(--ion-color-secondary);
 }
-
-.custom-item.ion-invalid {
-  --border-color: var(--ion-color-danger);
-}
-.custom-item.ion-valid {
-  --border-color: var(--ion-color-success);
-}
-
-
 .custom-modal {
   width: 100%;
   height: 100%;
@@ -83,6 +83,22 @@ ion-app {
 .h2-heading {
   color: var(--ion-color-secondary);
 }
+
+.custom-alert .alert-title {
+  color: var(--ion-color-primary);
+}
+
+.custom-alert .alert-message {
+  color: var(--ion-color-secondary);
+}
+
+
+
+
+
+
+
+
 
 
 

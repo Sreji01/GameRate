@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Anime} from "../anime.model";
 import {AnimeService} from "../anime.service";
+import {InfiniteScrollCustomEvent} from "@ionic/angular";
 
 @Component({
   selector: 'app-explore',
@@ -10,15 +11,15 @@ import {AnimeService} from "../anime.service";
 export class ExplorePage implements OnInit {
 
   animes!: Anime[];
-  constructor(private animeService: AnimeService) { }
+  constructor(private animeService: AnimeService) {}
 
   ngOnInit() {
+
+  }
+
+  ionViewWillEnter(){
     this.animeService.getAnimes().subscribe((animes) =>{
-      console.log(animes);
       this.animes = animes;
     });
   }
-
-
-
 }

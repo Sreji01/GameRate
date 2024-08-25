@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Anime } from '../anime.model';
 import { AnimeService } from '../anime.service';
 import {Router} from "@angular/router";
+import {ReviewService} from "../review.service";
 
 @Component({
   selector: 'app-search',
@@ -13,7 +14,7 @@ export class SearchPage implements OnInit {
   filteredAnimes: Anime[] = [];
   searchTerm: string = '';
 
-  constructor(private animeService: AnimeService, private router: Router,) { }
+  constructor(private animeService: AnimeService, private router: Router, private reviewService: ReviewService) { }
 
   ngOnInit() {
     this.loadAnimes();
@@ -36,4 +37,6 @@ export class SearchPage implements OnInit {
     const baseUrl = currentUrl.split('/')[1];
     this.router.navigateByUrl(`/${baseUrl}/anime-details/${animeId}`);
   }
+
+
 }

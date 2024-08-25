@@ -3,3 +3,14 @@
   color: var(--ion-color-primary);
   opacity: 0.5;
 }
+
+.span{
+  color: var(--ion-color-secondary);
+  cursor: default;
+}
+
+.clickable-username {
+  cursor: pointer;
+  color: var(--ion-color-primary);
+}
+

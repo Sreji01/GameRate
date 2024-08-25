@@ -10,9 +10,10 @@ import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from "./header/header.component";
 import {AnimeModalComponent} from "./anime-modal/anime-modal.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {UserPopoverComponent} from "./user-popover/user-popover.component";
 
 @NgModule({
-    declarations: [AppComponent, HeaderComponent, AnimeModalComponent],
+    declarations: [AppComponent, HeaderComponent, AnimeModalComponent, UserPopoverComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ReactiveFormsModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
