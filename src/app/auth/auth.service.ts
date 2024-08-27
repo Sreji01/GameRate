@@ -101,21 +101,7 @@ export class AuthService {
         this._user.next(user);
       }),
       catchError(errorRes => {
-        let errorMessage = 'An unknown error occurred!';
-        if (!errorRes.error || !errorRes.error.error) {
-          return throwError(errorMessage);
-        }
-        switch (errorRes.error.error.message) {
-          case 'EMAIL_NOT_FOUND':
-            errorMessage = 'This email address could not be found.';
-            break;
-          case 'INVALID_PASSWORD':
-            errorMessage = 'This password is not correct.';
-            break;
-          case 'USER_DISABLED':
-            errorMessage = 'This user has been disabled.';
-            break;
-        }
+        let errorMessage = '';
         return throwError(errorMessage);
       })
     );

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { authGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,22 +11,27 @@ const routes: Routes = [
   {
     path: 'explore',
     loadChildren: () => import('./explore/explore.module').then(m => m.ExplorePageModule),
+    canActivate: [authGuard]
   },
   {
     path: 'watchlist',
     loadChildren: () => import('./watchlist/watchlist.module').then(m => m.WatchlistPageModule),
+    canActivate: [authGuard]
   },
   {
     path: 'explore/anime-details/:id',
     loadChildren: () => import('./anime-details/anime-details.module').then(m => m.AnimeDetailsPageModule),
+    canActivate: [authGuard]
   },
   {
     path: 'search/anime-details/:id',
     loadChildren: () => import('./anime-details/anime-details.module').then(m => m.AnimeDetailsPageModule),
+    canActivate: [authGuard]
   },
   {
     path: 'watchlist/anime-details/:id',
     loadChildren: () => import('./anime-details/anime-details.module').then(m => m.AnimeDetailsPageModule),
+    canActivate: [authGuard]
   },
   {
     path: 'log-in',
@@ -38,10 +44,14 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule),
-  },  {
+    canActivate: [authGuard]
+  },
+  {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule),
+    canActivate: [authGuard]
   }
+
 
 ];
 

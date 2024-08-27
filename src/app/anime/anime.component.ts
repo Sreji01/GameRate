@@ -20,7 +20,7 @@ export class AnimeComponent implements OnInit {
     this.checkWatchlistStatus();
   }
 
-  async checkWatchlistStatus() {
+  checkWatchlistStatus() {
     this.watchlistService.isAnimeInWatchlist(this.anime.id).subscribe(isInWatchlist => {
       this.isInWatchlist = isInWatchlist;
     });

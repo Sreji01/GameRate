@@ -17,7 +17,6 @@ export class LogInPage implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    // Reset form on navigation to the login page
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (event.urlAfterRedirects === '/log-in') {
@@ -59,6 +58,7 @@ export class LogInPage implements OnInit {
         control.markAsUntouched();
         control.markAsPristine();
         control.updateValueAndValidity();
+        this.errorMessage  = '';
       });
     }
   }
