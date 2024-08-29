@@ -1,9 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AlertController, ModalController } from "@ionic/angular";
 import { Anime } from "../anime.model";
-import { AnimeService } from "../anime.service";
+import { AnimeService } from "../services/anime.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { ReviewService } from "../review.service";
+import { ReviewService } from "../services/review.service";
 
 @Component({
   selector: 'app-anime-modal',
@@ -30,13 +30,19 @@ export class AnimeModalComponent implements OnInit {
 
   ngOnInit() {
     this.loadAnimes();
-    this.initForm();
   }
 
   loadAnimes() {
     this.animeService.getAnimes().subscribe(animes => {
       this.animes = animes;
       this.filteredAnimes = animes;
+    });
+  }
+
+  private initForm() {
+    this.reviewForm = new FormGroup({
+      reviewHeadline: new FormControl(null),
+      reviewContent: new FormControl(null)
     });
   }
 
@@ -68,13 +74,6 @@ export class AnimeModalComponent implements OnInit {
 
   toggleRating(index: number): void {
     this.animeRating = index + 1;
-  }
-
-  private initForm() {
-    this.reviewForm = new FormGroup({
-      reviewHeadline: new FormControl(null),
-      reviewContent: new FormControl(null)
-    });
   }
 
   get isFormValid(): boolean {

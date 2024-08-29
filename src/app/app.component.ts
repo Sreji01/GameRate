@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { AnimeModalComponent } from "./anime-modal/anime-modal.component";
-import {AuthService} from "./auth/auth.service";
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-root',

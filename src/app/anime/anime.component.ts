@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Anime } from "../anime.model";
 import { AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
-import { WatchlistService } from "../watchlist.service";
+import { WatchlistService } from "../services/watchlist.service";
 
 @Component({
   selector: 'app-anime',

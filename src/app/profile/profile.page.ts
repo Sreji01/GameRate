@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +11,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   username: string = '';
   email: string = '';
   password: string = '';
-  fullName: string = '';  // Add this line
+  fullName: string = '';
   private userSub: Subscription = new Subscription();
   private loadingSub: Subscription = new Subscription();
   isLoading = false;
@@ -30,7 +30,7 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.username = userData.username || '';
             this.email = userData.email || '';
             this.password = userData.password || '';
-            this.fullName = `${userData.name || ''} ${userData.surname || ''}`; // Set full name
+            this.fullName = `${userData.name || ''} ${userData.surname || ''}`;
           },
           error => {
             console.error('Failed to fetch user data:', error);

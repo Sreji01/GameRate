@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {BehaviorSubject, catchError, map, tap, throwError} from "rxjs";
-import {User} from "./user.model";
+import {User} from "../auth/user.model";
 import {Router} from "@angular/router";
 
 interface AuthResponseData {
@@ -135,7 +135,13 @@ export class AuthService {
       this._user.next(null);
       this.isLoading.next(false);
       this.router.navigateByUrl('/log-in');
-      window.dispatchEvent(new Event('logout'));
+    }, 1000);
+  }
+
+  logOutPopover(){
+    setTimeout(() => {
+      this._user.next(null);
+      this.router.navigateByUrl('/log-in');
     }, 1000);
   }
 }

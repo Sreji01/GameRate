@@ -1,16 +1,16 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Anime } from '../anime.model';
 import { ActivatedRoute } from '@angular/router';
-import { AnimeService } from '../anime.service';
+import { AnimeService } from '../services/anime.service';
 import { Location } from '@angular/common';
-import { ReviewService } from '../review.service';
-import { AuthService } from '../auth/auth.service';
+import { ReviewService } from '../services/review.service';
+import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ReviewData } from "../review.service";
+import { ReviewData } from "../services/review.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AlertController } from "@ionic/angular";
-import {WatchlistService} from "../watchlist.service";
+import {WatchlistService} from "../services/watchlist.service";
 
 @Component({
   selector: 'app-anime-details',
@@ -64,7 +64,6 @@ export class AnimeDetailsPage implements OnInit {
       })
     ).subscribe(review => {
       this.review = review;
-      this.initializeForm();
       if (review) {
         this.reviewForm.patchValue({
           reviewHeadline: review.headline,
@@ -86,7 +85,7 @@ export class AnimeDetailsPage implements OnInit {
     this.initializeForm();
   }
 
-  async checkWatchlistStatus() {
+  checkWatchlistStatus() {
     this.watchlistService.isAnimeInWatchlist(this.anime.id).subscribe(isInWatchlist => {
       this.isInWatchlist = isInWatchlist;
     });
@@ -126,6 +125,27 @@ export class AnimeDetailsPage implements OnInit {
     }
   }
 
+  openDeleteQuestion() {
+    this.alertCtrl.create({
+      message: "Are you sure you want to delete this review?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.deleteReview();
+          }
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+        }
+      ],
+      cssClass: 'custom-alert'
+    }).then(alertEl => {
+      alertEl.present();
+    });
+  }
+
   addReview() {
     const review = {
       headline: this.reviewForm.get('reviewHeadline')?.value,
@@ -149,17 +169,6 @@ export class AnimeDetailsPage implements OnInit {
           console.error('Error adding review:', error);
         }
       });
-  }
-
-  updateAnimeRating() {
-    this.reviewService.getAverageRating(this.anime.id).subscribe({
-      next: (averageRating) => {
-        this.anime.rating = averageRating;
-      },
-      error: (error) => {
-        console.error('Error fetching updated rating:', error);
-      }
-    });
   }
 
   editReview() {
@@ -210,7 +219,16 @@ export class AnimeDetailsPage implements OnInit {
     });
   }
 
-
+  updateAnimeRating() {
+    this.reviewService.getAverageRating(this.anime.id).subscribe({
+      next: (averageRating) => {
+        this.anime.rating = averageRating;
+      },
+      error: (error) => {
+        console.error('Error fetching updated rating:', error);
+      }
+    });
+  }
 
   openAddAlert() {
     this.alertCtrl.create({
@@ -270,30 +288,6 @@ export class AnimeDetailsPage implements OnInit {
     this.originalContent = this.reviewForm.get('reviewContent')?.value;
   }
 
-  openDeleteQuestion() {
-    this.alertCtrl.create({
-      message: "Are you sure you want to delete this review?",
-      buttons: [
-        {
-          text: 'Yes',
-          handler: () => {
-            this.deleteReview();
-          }
-        },
-        {
-          text: 'No',
-          role: 'cancel',
-          handler: () => {
-            console.log('User clicked No');
-          }
-        }
-      ],
-      cssClass: 'custom-alert'
-    }).then(alertEl => {
-      alertEl.present();
-    });
-  }
-
   onCancel() {
     this.disableContentInput = true;
     this.disableHeadlineInput = true;
@@ -336,6 +330,4 @@ export class AnimeDetailsPage implements OnInit {
       });
     }
   }
-
-  protected readonly event = event;
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from "@angular/router";
 
 @Component({
@@ -16,7 +16,7 @@ export class UserPopoverComponent {
   ) {}
 
   onLogout() {
-    this.authService.logOut();
+    this.authService.logOutPopover();
     this.popoverCtrl.dismiss();
   }
 

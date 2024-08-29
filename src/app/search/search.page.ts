@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Anime } from '../anime.model';
-import { AnimeService } from '../anime.service';
+import { AnimeService } from '../services/anime.service';
 import {Router} from "@angular/router";
-import {ReviewService} from "../review.service";
+import {ReviewService} from "../services/review.service";
 
 @Component({
   selector: 'app-search',
@@ -16,7 +16,9 @@ export class SearchPage implements OnInit {
 
   constructor(private animeService: AnimeService, private router: Router, private reviewService: ReviewService) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter(){
     this.loadAnimes();
   }
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { switchMap, map } from 'rxjs/operators';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Anime } from "./anime.model";
+import { Anime } from "../anime.model";
 
 @Injectable({
   providedIn: 'root'

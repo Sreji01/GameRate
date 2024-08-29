@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Anime } from "../anime.model";
-import { WatchlistService } from "../watchlist.service";
+import { WatchlistService } from "../services/watchlist.service";
 import { switchMap, take } from "rxjs/operators";
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: 'app-watchlist',

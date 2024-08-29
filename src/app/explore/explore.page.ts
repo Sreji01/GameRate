@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Anime} from "../anime.model";
-import {AnimeService} from "../anime.service";
+import {AnimeService} from "../services/anime.service";
 import {InfiniteScrollCustomEvent} from "@ionic/angular";
 
 @Component({

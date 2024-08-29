@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Anime} from "./anime.model";
+import {Anime} from "../anime.model";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 
