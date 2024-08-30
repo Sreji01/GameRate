@@ -1,1 +1,2 @@
 # Mobilno_rac_projekat
+Aplikacija sluzi za ocenjivanje i ostavljanje recenzija za veliki broj anime-a. Korisnik je u mogucnosti da ostavi naslov i sadrzaj recenzije ukoliko zeli, ili samo da ostavi ocenu. Takodje, korisnik moze da doda anime u svoju watchlist-u ukoliko ima nameru da ga odgleda. Postoji i mogucnost za pretrazivanje anime serijala po naslovu, i brzo dodavanje recenzije preko modal-a.
