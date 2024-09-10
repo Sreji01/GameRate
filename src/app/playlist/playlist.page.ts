@@ -13,7 +13,7 @@ export class PlaylistPage implements OnInit {
   games: Game[] = [];
   error: string | null = null;
 
-  constructor(private watchlistService: PlaylistService, private authService: AuthService) {}
+  constructor(private playlistService: PlaylistService, private authService: AuthService) {}
 
   ngOnInit() {}
 
@@ -24,7 +24,7 @@ export class PlaylistPage implements OnInit {
         if (!userId) {
           throw new Error('User ID not available');
         }
-        return this.watchlistService.getGamesFromPlaylist(userId);
+        return this.playlistService.getGamesFromPlaylist(userId);
       })
     ).subscribe({
       next: (games) => {
@@ -36,7 +36,7 @@ export class PlaylistPage implements OnInit {
     });
   }
 
-  onAnimeRemoved(gameId: string) {
+  onGameRemoved(gameId: string) {
     this.games = this.games.filter(game => game.id !== gameId);
   }
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Game } from '../game.model';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../services/game.service';
@@ -10,7 +10,7 @@ import { switchMap } from 'rxjs/operators';
 import { ReviewData } from "../services/review.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AlertController } from "@ionic/angular";
-import {PlaylistService} from "../services/playlist.service";
+import { PlaylistService } from "../services/playlist.service";
 
 @Component({
   selector: 'app-game-details',
@@ -33,9 +33,8 @@ export class GameDetailsPage implements OnInit {
   reviewForm!: FormGroup;
   disableHeadlineInput: boolean = false;
   disableContentInput: boolean = false;
-  isInWatchlist: boolean = false;
+  isInPlaylist: boolean = false;
   @Output() gameRemoved = new EventEmitter<string>();
-
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +43,7 @@ export class GameDetailsPage implements OnInit {
     private reviewService: ReviewService,
     private authService: AuthService,
     private alertCtrl: AlertController,
-    private watchlistService: PlaylistService
+    private playlistService: PlaylistService
   ) {}
 
   ngOnInit() {
@@ -79,15 +78,15 @@ export class GameDetailsPage implements OnInit {
         this.disableHeadlineInput = true;
         this.disableContentInput = true;
       }
-      this.checkWatchlistStatus();
+      this.checkPlaylistStatus();
     });
 
     this.initializeForm();
   }
 
-  checkWatchlistStatus() {
-    this.watchlistService.isGameInPlaylist(this.game.id).subscribe(isInWatchlist => {
-      this.isInWatchlist = isInWatchlist;
+  checkPlaylistStatus() {
+    this.playlistService.isGameInPlaylist(this.game.id).subscribe(isInPlaylist => {
+      this.isInPlaylist = isInPlaylist;
     });
   }
 
@@ -163,7 +162,7 @@ export class GameDetailsPage implements OnInit {
           this.disableHeadlineInput = true;
           this.disableContentInput = true;
           this.openAddAlert();
-          this.updateAnimeRating();
+          this.updateGameRating();
         },
         error: (error) => {
           console.error('Error adding review:', error);
@@ -189,7 +188,7 @@ export class GameDetailsPage implements OnInit {
           this.disableHeadlineInput = true;
           this.disableContentInput = true;
           this.openEditAlert();
-          this.updateAnimeRating();
+          this.updateGameRating();
         },
         error: (error) => {
           console.error('Error editing review:', error);
@@ -211,7 +210,7 @@ export class GameDetailsPage implements OnInit {
         this.reviewForm.reset();
         this.gameRating = 0;
         this.openDeleteAlert();
-        this.updateAnimeRating();
+        this.updateGameRating();
       },
       error: (error) => {
         console.error('Error deleting review:', error);
@@ -219,7 +218,7 @@ export class GameDetailsPage implements OnInit {
     });
   }
 
-  updateAnimeRating() {
+  updateGameRating() {
     this.reviewService.getAverageRating(this.game.id).subscribe({
       next: (averageRating) => {
         this.game.rating = averageRating;
@@ -305,24 +304,24 @@ export class GameDetailsPage implements OnInit {
 
   async openAlert(event: MouseEvent) {
 
-    if (this.isInWatchlist) {
-      this.watchlistService.removeFromPlaylist(this.game.id).subscribe(async () => {
-        this.isInWatchlist = false;
+    if (this.isInPlaylist) {
+      this.playlistService.removeFromPlaylist(this.game.id).subscribe(async () => {
+        this.isInPlaylist = false;
         this.gameRemoved.emit(this.game.id);
 
         const alert = await this.alertCtrl.create({
-          message: "Removed from the Watchlist!",
+          message: "Removed from the Playlist!",
           buttons: ['OK'],
           cssClass: 'custom-alert'
         });
         await alert.present();
       });
     } else {
-      this.watchlistService.addToPlaylist(this.game).subscribe(async () => {
-        this.isInWatchlist = true;
+      this.playlistService.addToPlaylist(this.game).subscribe(async () => {
+        this.isInPlaylist = true;
 
         const alert = await this.alertCtrl.create({
-          message: "Added to the Watchlist!",
+          message: "Added to the Playlist!",
           buttons: ['OK'],
           cssClass: 'custom-alert'
         });

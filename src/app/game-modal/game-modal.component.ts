@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from "@ionic/angular";
 import { Game } from "../game.model";
 import { GameService } from "../services/game.service";
-import {FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReviewService } from "../services/review.service";
 
 @Component({
@@ -29,10 +29,10 @@ export class GameModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadAnimes();
+    this.loadGames();
   }
 
-  loadAnimes() {
+  loadGames() {
     this.gameService.getGames().subscribe(games => {
       this.games = games;
       this.filteredGames = games;
@@ -46,18 +46,18 @@ export class GameModalComponent implements OnInit {
     });
   }
 
-  filterAnimes() {
+  filterGames() {
     const term = this.searchTerm.toLowerCase();
     this.filteredGames = this.games.filter(game => game.title.toLowerCase().includes(term));
     this.selectedGame = null;
   }
 
-  selectAnime(game: Game) {
+  selectGame(game: Game) {
     this.selectedGame = game;
     this.initForm();
   }
 
-  deselectAnime(event: Event) {
+  deselectGame(event: Event) {
     event.stopPropagation();
     this.selectedGame = null;
     this.reviewForm.reset();

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from '../game.model';
 import { GameService } from '../services/game.service';
-import {Router} from "@angular/router";
-import {ReviewService} from "../services/review.service";
+import { Router } from "@angular/router";
+import { ReviewService } from "../services/review.service";
 
 @Component({
   selector: 'app-search',
@@ -19,17 +19,17 @@ export class SearchPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter(){
-    this.loadAnimes();
+    this.loadGames();
   }
 
-  loadAnimes() {
+  loadGames() {
     this.gameService.getGames().subscribe(games => {
       this.games = games;
       this.filteredGames = games;
     });
   }
 
-  filterAnimes() {
+  filterGames() {
     const term = this.searchTerm.toLowerCase();
     this.filteredGames = this.games.filter(game => game.title.toLowerCase().includes(term));
   }
@@ -39,6 +39,5 @@ export class SearchPage implements OnInit {
     const baseUrl = currentUrl.split('/')[1];
     this.router.navigateByUrl(`/${baseUrl}/game-details/${gameId}`);
   }
-
 
 }
