@@ -1,0 +1,11 @@
+<div class="image-container" (click)="navigateToDetails(game.id, $event)">
+  <ion-img src="{{game.imageUrl}}" alt="{{game.title}}" class="anime-image"></ion-img>
+  <div class="anime-info">
+    <div class="anime-title">{{game.title}}</div>
+    <div class="small-title" *ngIf="game.title === 'Bleach: Thousand-Year Blood War'">{{game.title}}</div>
+    <div class="mid-title" *ngIf="game.title === 'Fullmetal Alchemist: Brotherhood'">{{game.title}}</div>
+    <div class="mid-title" *ngIf="game.title === 'Boruto: Naruto Next Generations'">{{game.title}}</div>
+    <ion-icon *ngIf="!isInWatchlist" name="add-circle-outline" class="watchlist-icon" (click)="openAlert($event)"></ion-icon>
+    <ion-icon *ngIf="isInWatchlist" name="remove-circle-outline" class="watchlist-icon" (click)="openAlert($event)"></ion-icon>
+  </div>
+</div>

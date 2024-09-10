@@ -4,9 +4,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AnimeDetailsPageRoutingModule } from './anime-details-routing.module';
+import { AnimeDetailsPageRoutingModule } from './game-details-routing.module';
 
-import { AnimeDetailsPage } from './anime-details.page';
+import { GameDetailsPage } from './game-details.page';
 
 @NgModule({
     imports: [
@@ -16,6 +16,6 @@ import { AnimeDetailsPage } from './anime-details.page';
         AnimeDetailsPageRoutingModule,
         ReactiveFormsModule
     ],
-  declarations: [AnimeDetailsPage]
+  declarations: [GameDetailsPage]
 })
 export class AnimeDetailsPageModule {}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from "@angular/router";
 import { ModalController } from "@ionic/angular";
-import { AnimeModalComponent } from "./anime-modal/anime-modal.component";
+import { GameModalComponent } from "./game-modal/game-modal.component";
 import {AuthService} from "./services/auth.service";
 
 @Component({
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     }
     this.modalIsOpen = true;
     this.modalCtrl.create({
-      component: AnimeModalComponent,
+      component: GameModalComponent,
       cssClass: 'custom-modal',
       backdropDismiss: true,
       showBackdrop: false

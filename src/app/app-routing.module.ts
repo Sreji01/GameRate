@@ -19,18 +19,18 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'explore/anime-details/:id',
-    loadChildren: () => import('./anime-details/anime-details.module').then(m => m.AnimeDetailsPageModule),
+    path: 'explore/game-details/:id',
+    loadChildren: () => import('./game-details/game-details.module').then(m => m.AnimeDetailsPageModule),
     canActivate: [authGuard]
   },
   {
-    path: 'search/anime-details/:id',
-    loadChildren: () => import('./anime-details/anime-details.module').then(m => m.AnimeDetailsPageModule),
+    path: 'search/game-details/:id',
+    loadChildren: () => import('./game-details/game-details.module').then(m => m.AnimeDetailsPageModule),
     canActivate: [authGuard]
   },
   {
-    path: 'watchlist/anime-details/:id',
-    loadChildren: () => import('./anime-details/anime-details.module').then(m => m.AnimeDetailsPageModule),
+    path: 'watchlist/game-details/:id',
+    loadChildren: () => import('./game-details/game-details.module').then(m => m.AnimeDetailsPageModule),
     canActivate: [authGuard]
   },
   {

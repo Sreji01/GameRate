@@ -1,28 +1,28 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AlertController, ModalController } from "@ionic/angular";
-import { Anime } from "../anime.model";
-import { AnimeService } from "../services/anime.service";
+import { Game } from "../game.model";
+import { GameService } from "../services/game.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { ReviewService } from "../services/review.service";
 
 @Component({
-  selector: 'app-anime-modal',
-  templateUrl: './anime-modal.component.html',
-  styleUrls: ['./anime-modal.component.scss'],
+  selector: 'app-game-modal',
+  templateUrl: './game-modal.component.html',
+  styleUrls: ['./game-modal.component.scss'],
 })
-export class AnimeModalComponent implements OnInit {
+export class GameModalComponent implements OnInit {
 
-  animes: Anime[] = [];
-  filteredAnimes: Anime[] = [];
+  games: Game[] = [];
+  filteredGames: Game[] = [];
   searchTerm: string = '';
-  selectedAnime: Anime | null = null;
+  selectedGame: Game | null = null;
   reviewForm!: FormGroup;
   starsArray: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
-  animeRating: number = 0;
+  gameRating: number = 0;
 
   constructor(
     private modalCtrl: ModalController,
-    private animeService: AnimeService,
+    private gameService: GameService,
     private fb: FormBuilder,
     private reviewService: ReviewService,
     private alertCtrl: AlertController
@@ -33,9 +33,9 @@ export class AnimeModalComponent implements OnInit {
   }
 
   loadAnimes() {
-    this.animeService.getAnimes().subscribe(animes => {
-      this.animes = animes;
-      this.filteredAnimes = animes;
+    this.gameService.getAnimes().subscribe(games => {
+      this.games = games;
+      this.filteredGames = games;
     });
   }
 
@@ -48,20 +48,20 @@ export class AnimeModalComponent implements OnInit {
 
   filterAnimes() {
     const term = this.searchTerm.toLowerCase();
-    this.filteredAnimes = this.animes.filter(anime => anime.title.toLowerCase().includes(term));
-    this.selectedAnime = null;
+    this.filteredGames = this.games.filter(game => game.title.toLowerCase().includes(term));
+    this.selectedGame = null;
   }
 
-  selectAnime(anime: Anime) {
-    this.selectedAnime = anime;
+  selectAnime(game: Game) {
+    this.selectedGame = game;
     this.initForm();
   }
 
   deselectAnime(event: Event) {
     event.stopPropagation();
-    this.selectedAnime = null;
+    this.selectedGame = null;
     this.reviewForm.reset();
-    this.animeRating = 0;
+    this.gameRating = 0;
   }
 
   onCancel() {
@@ -69,35 +69,35 @@ export class AnimeModalComponent implements OnInit {
   }
 
   getStarIcon(index: number): string {
-    return index < this.animeRating ? 'star' : 'star-outline';
+    return index < this.gameRating ? 'star' : 'star-outline';
   }
 
   toggleRating(index: number): void {
-    this.animeRating = index + 1;
+    this.gameRating = index + 1;
   }
 
   get isFormValid(): boolean {
-    return this.reviewForm.valid && this.animeRating > 0;
+    return this.reviewForm.valid && this.gameRating > 0;
   }
 
   submitReview() {
     const review = {
       headline: this.reviewForm.get('reviewHeadline')?.value,
       content: this.reviewForm.get('reviewContent')?.value,
-      rating: this.animeRating - 1
+      rating: this.gameRating - 1
     };
 
-    if (this.selectedAnime) {
-      this.reviewService.addReview(this.selectedAnime.id, review.headline, review.content, review.rating)
+    if (this.selectedGame) {
+      this.reviewService.addReview(this.selectedGame.id, review.headline, review.content, review.rating)
         .subscribe({
           next: (response) => {
             if (response.message) {
               this.reviewForm.reset();
-              this.animeRating = 0;
+              this.gameRating = 0;
               this.openExistAlert();
             } else {
               this.reviewForm.reset();
-              this.animeRating = 0;
+              this.gameRating = 0;
               this.openAddAlert();
             }
           },

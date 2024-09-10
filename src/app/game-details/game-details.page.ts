@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import { Anime } from '../anime.model';
+import { Game } from '../game.model';
 import { ActivatedRoute } from '@angular/router';
-import { AnimeService } from '../services/anime.service';
+import { GameService } from '../services/game.service';
 import { Location } from '@angular/common';
 import { ReviewService } from '../services/review.service';
 import { AuthService } from '../services/auth.service';
@@ -13,14 +13,14 @@ import { AlertController } from "@ionic/angular";
 import {WatchlistService} from "../services/watchlist.service";
 
 @Component({
-  selector: 'app-anime-details',
-  templateUrl: './anime-details.page.html',
-  styleUrls: ['./anime-details.page.scss'],
+  selector: 'app-game-details',
+  templateUrl: './game-details.page.html',
+  styleUrls: ['./game-details.page.scss'],
 })
-export class AnimeDetailsPage implements OnInit {
-  anime!: Anime;
+export class GameDetailsPage implements OnInit {
+  game!: Game;
   starsArray: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
-  animeRating: number = 0;
+  gameRating: number = 0;
   originalRating: number = 0;
   originalHeadline: string = '';
   originalContent: string = '';
@@ -34,12 +34,12 @@ export class AnimeDetailsPage implements OnInit {
   disableHeadlineInput: boolean = false;
   disableContentInput: boolean = false;
   isInWatchlist: boolean = false;
-  @Output() animeRemoved = new EventEmitter<string>();
+  @Output() gameRemoved = new EventEmitter<string>();
 
 
   constructor(
     private route: ActivatedRoute,
-    private animeService: AnimeService,
+    private gameService: GameService,
     private location: Location,
     private reviewService: ReviewService,
     private authService: AuthService,
@@ -50,12 +50,12 @@ export class AnimeDetailsPage implements OnInit {
   ngOnInit() {
     this.route.paramMap.pipe(
       switchMap(paramMap => {
-        const animeId = paramMap.get('id');
-        if (animeId !== null) {
-          this.anime = this.animeService.getAnime(animeId)!;
+        const gameId = paramMap.get('id');
+        if (gameId !== null) {
+          this.game = this.gameService.getAnime(gameId)!;
           return this.authService.userId.pipe(
             switchMap(userId => {
-              return this.reviewService.getReview(animeId, userId!);
+              return this.reviewService.getReview(gameId, userId!);
             })
           );
         } else {
@@ -69,8 +69,8 @@ export class AnimeDetailsPage implements OnInit {
           reviewHeadline: review.headline,
           reviewContent: review.content
         });
-        this.animeRating = +review.rating + 1;
-        this.originalRating = this.animeRating;
+        this.gameRating = +review.rating + 1;
+        this.originalRating = this.gameRating;
         this.originalHeadline = review.headline;
         this.originalContent = review.content;
         this.showEditIcon = true;
@@ -86,7 +86,7 @@ export class AnimeDetailsPage implements OnInit {
   }
 
   checkWatchlistStatus() {
-    this.watchlistService.isAnimeInWatchlist(this.anime.id).subscribe(isInWatchlist => {
+    this.watchlistService.isAnimeInWatchlist(this.game.id).subscribe(isInWatchlist => {
       this.isInWatchlist = isInWatchlist;
     });
   }
@@ -103,24 +103,24 @@ export class AnimeDetailsPage implements OnInit {
   }
 
   getStarIcon(index: number): string {
-    return index < this.animeRating ? 'star' : 'star-outline';
+    return index < this.gameRating ? 'star' : 'star-outline';
   }
 
   toggleRating(index: number): void {
     if (!this.disableContentInput) {
-      this.animeRating = index + 1;
+      this.gameRating = index + 1;
     }
   }
 
   get isFormValid(): boolean {
-    return this.reviewForm.valid && this.animeRating > 0;
+    return this.reviewForm.valid && this.gameRating > 0;
   }
 
   submitReview(): void {
-    if (this.reviewForm.valid && this.animeRating > 0 && this.showSubmitButton) {
+    if (this.reviewForm.valid && this.gameRating > 0 && this.showSubmitButton) {
       this.addReview();
     }
-    if (this.reviewForm.valid && this.animeRating > 0 && this.showEditButton) {
+    if (this.reviewForm.valid && this.gameRating > 0 && this.showEditButton) {
       this.editReview();
     }
   }
@@ -150,10 +150,10 @@ export class AnimeDetailsPage implements OnInit {
     const review = {
       headline: this.reviewForm.get('reviewHeadline')?.value,
       content: this.reviewForm.get('reviewContent')?.value,
-      rating: this.animeRating - 1
+      rating: this.gameRating - 1
     };
 
-    this.reviewService.addReview(this.anime.id, review.headline, review.content, review.rating)
+    this.reviewService.addReview(this.game.id, review.headline, review.content, review.rating)
       .subscribe({
         next: (response) => {
           console.log('Review added successfully', response);
@@ -175,10 +175,10 @@ export class AnimeDetailsPage implements OnInit {
     const review = {
       headline: this.reviewForm.get('reviewHeadline')?.value,
       content: this.reviewForm.get('reviewContent')?.value,
-      rating: this.animeRating - 1
+      rating: this.gameRating - 1
     };
 
-    this.reviewService.editReview(this.anime.id, review.headline, review.content, review.rating)
+    this.reviewService.editReview(this.game.id, review.headline, review.content, review.rating)
       .subscribe({
         next: (response) => {
           console.log('Review updated successfully', response);
@@ -198,7 +198,7 @@ export class AnimeDetailsPage implements OnInit {
   }
 
   deleteReview() {
-    this.reviewService.deleteReview(this.anime.id).subscribe({
+    this.reviewService.deleteReview(this.game.id).subscribe({
       next: (response) => {
         console.log('Review deleted successfully', response);
         this.showEditIcon = false;
@@ -209,7 +209,7 @@ export class AnimeDetailsPage implements OnInit {
         this.disableHeadlineInput = false;
         this.disableContentInput = false;
         this.reviewForm.reset();
-        this.animeRating = 0;
+        this.gameRating = 0;
         this.openDeleteAlert();
         this.updateAnimeRating();
       },
@@ -220,9 +220,9 @@ export class AnimeDetailsPage implements OnInit {
   }
 
   updateAnimeRating() {
-    this.reviewService.getAverageRating(this.anime.id).subscribe({
+    this.reviewService.getAverageRating(this.game.id).subscribe({
       next: (averageRating) => {
-        this.anime.rating = averageRating;
+        this.game.rating = averageRating;
       },
       error: (error) => {
         console.error('Error fetching updated rating:', error);
@@ -283,7 +283,7 @@ export class AnimeDetailsPage implements OnInit {
     this.showEditIcon = false;
     this.showCancelIcon = true;
     this.showDeleteIcon = false;
-    this.originalRating = this.animeRating;
+    this.originalRating = this.gameRating;
     this.originalHeadline = this.reviewForm.get('reviewHeadline')?.value;
     this.originalContent = this.reviewForm.get('reviewContent')?.value;
   }
@@ -296,7 +296,7 @@ export class AnimeDetailsPage implements OnInit {
     this.showEditIcon = true;
     this.showCancelIcon = false;
     this.showDeleteIcon = true;
-    this.animeRating = this.originalRating;
+    this.gameRating = this.originalRating;
     this.reviewForm.patchValue({
       reviewHeadline: this.originalHeadline,
       reviewContent: this.originalContent
@@ -306,9 +306,9 @@ export class AnimeDetailsPage implements OnInit {
   async openAlert(event: MouseEvent) {
 
     if (this.isInWatchlist) {
-      this.watchlistService.removeFromWatchlist(this.anime.id).subscribe(async () => {
+      this.watchlistService.removeFromWatchlist(this.game.id).subscribe(async () => {
         this.isInWatchlist = false;
-        this.animeRemoved.emit(this.anime.id);
+        this.gameRemoved.emit(this.game.id);
 
         const alert = await this.alertCtrl.create({
           message: "Removed from the Watchlist!",
@@ -318,7 +318,7 @@ export class AnimeDetailsPage implements OnInit {
         await alert.present();
       });
     } else {
-      this.watchlistService.addToWatchlist(this.anime).subscribe(async () => {
+      this.watchlistService.addToWatchlist(this.game).subscribe(async () => {
         this.isInWatchlist = true;
 
         const alert = await this.alertCtrl.create({

@@ -4,13 +4,13 @@
       <ion-button fill="clear" class="back-button" (click)="goBack()">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
-      <img src="{{anime.posterUrl}}" alt="{{anime.title}}">
+      <img src="{{game.posterUrl}}" alt="{{game.title}}">
     </div>
     <div class="anime-info">
       <ion-grid>
         <ion-row>
           <ion-col size-xl="6" size-xs="10">
-            <h1 class="anime-title">{{anime.title}}</h1>
+            <h1 class="anime-title">{{game.title}}</h1>
           </ion-col>
           <ion-col offset-xl="5" offset-xs="0">
             <div class="icon-wrapper-watchlist" (click)="openAlert($event)" *ngIf="!isInWatchlist">
@@ -24,17 +24,17 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <p class="anime-year">{{anime.year}}</p>
+          <p class="anime-year">{{game.year}}</p>
         </ion-row>
         <ion-row>
-          <p class="anime-description">{{anime.description}}</p>
+          <p class="anime-description">{{game.description}}</p>
         </ion-row>
         <ion-row>
           <div class="rating-container">
             <ion-icon name="star"></ion-icon>
-            <p class="anime-rating" *ngIf="anime.rating > 0">{{ anime.rating | number: '1.1-1' }}</p>
-            <p class="slash-ten" *ngIf="anime.rating > 0">/10</p>
-            <p class="anime-rating" *ngIf="anime.rating === 0">N/A</p>
+            <p class="anime-rating" *ngIf="game.rating > 0">{{ game.rating | number: '1.1-1' }}</p>
+            <p class="slash-ten" *ngIf="game.rating > 0">/10</p>
+            <p class="anime-rating" *ngIf="game.rating === 0">N/A</p>
           </div>
         </ion-row>
       </ion-grid>

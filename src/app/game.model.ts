@@ -1,4 +1,4 @@
-export interface Anime {
+export interface Game {
   id: string;
   title: string;
   year: number;

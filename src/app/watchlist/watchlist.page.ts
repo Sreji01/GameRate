@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Anime } from "../anime.model";
+import { Game } from "../game.model";
 import { WatchlistService } from "../services/watchlist.service";
 import { switchMap, take } from "rxjs/operators";
 import { AuthService } from "../services/auth.service";
@@ -10,7 +10,7 @@ import { AuthService } from "../services/auth.service";
   styleUrls: ['./watchlist.page.scss'],
 })
 export class WatchlistPage implements OnInit {
-  animes: Anime[] = [];
+  games: Game[] = [];
   error: string | null = null;
 
   constructor(private watchlistService: WatchlistService, private authService: AuthService) {}
@@ -27,8 +27,8 @@ export class WatchlistPage implements OnInit {
         return this.watchlistService.getAnimesFromWatchlist(userId);
       })
     ).subscribe({
-      next: (animes) => {
-        this.animes = animes;
+      next: (games) => {
+        this.games = games;
       },
       error: (error) => {
         this.error = error.message;
@@ -36,7 +36,7 @@ export class WatchlistPage implements OnInit {
     });
   }
 
-  onAnimeRemoved(animeId: string) {
-    this.animes = this.animes.filter(anime => anime.id !== animeId);
+  onAnimeRemoved(gameId: string) {
+    this.games = this.games.filter(game => game.id !== gameId);
   }
 }

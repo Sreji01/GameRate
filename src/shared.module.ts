@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {IonicModule} from "@ionic/angular";
-import {AnimeComponent} from "./app/anime/anime.component";
+import {GameComponent} from "./app/game/game.component";
 
 @NgModule({
   declarations: [
-    AnimeComponent
+    GameComponent
   ],
   imports: [
     CommonModule,
     IonicModule
   ],
   exports: [
-    AnimeComponent
+    GameComponent
   ]
 })
 export class SharedModule { }

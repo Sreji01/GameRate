@@ -13,29 +13,29 @@
 
   <div class="list-container">
     <ion-list class="custom-list">
-      <ion-item *ngFor="let anime of filteredAnimes"
+      <ion-item *ngFor="let game of filteredGames"
                 class="custom-search-item"
-                [ngClass]="{'selected': anime === selectedAnime, 'hidden': selectedAnime && anime !== selectedAnime}"
-                (click)="selectAnime(anime)">
+                [ngClass]="{'selected': game === selectedGame, 'hidden': selectedGame && game !== selectedGame}"
+                (click)="selectAnime(game)">
         <ion-thumbnail slot="start">
-          <img [src]="anime.imageUrl" alt="{{anime.title}}">
+          <img [src]="game.imageUrl" alt="{{game.title}}">
         </ion-thumbnail>
         <ion-label>
-          <h2 class="anime-search-title">{{ anime.title }}</h2>
-          <p class="anime-search-year">{{ anime.year }}</p>
+          <h2 class="anime-search-title">{{ game.title }}</h2>
+          <p class="anime-search-year">{{ game.year }}</p>
           <div class="rating-container">
             <ion-icon name="star"></ion-icon>
-            <p class="anime-search-rating" *ngIf="anime.rating > 0">{{ anime.rating | number: '1.1-1' }}</p>
-            <p class="anime-search-rating" *ngIf="anime.rating === 0">N/A</p>
+            <p class="anime-search-rating" *ngIf="game.rating > 0">{{ game.rating | number: '1.1-1' }}</p>
+            <p class="anime-search-rating" *ngIf="game.rating === 0">N/A</p>
           </div>
         </ion-label>
-        <ion-icon *ngIf="anime === selectedAnime" name="close-circle-outline" color="primary" slot="end" (click)="deselectAnime($event)"></ion-icon>
+        <ion-icon *ngIf="game === selectedGame" name="close-circle-outline" color="primary" slot="end" (click)="deselectAnime($event)"></ion-icon>
       </ion-item>
     </ion-list>
   </div>
-  <div *ngIf="selectedAnime" class="anime-details"></div>
+  <div *ngIf="selectedGame" class="anime-details"></div>
 
-  <ion-card *ngIf="selectedAnime" class="review-section">
+  <ion-card *ngIf="selectedGame" class="review-section">
     <ion-grid>
       <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
         <ion-row>
