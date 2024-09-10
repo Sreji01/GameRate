@@ -8,13 +8,13 @@ import { Game } from "../game.model";
 @Injectable({
   providedIn: 'root'
 })
-export class WatchlistService {
+export class PlaylistService {
   private dbUrl = 'https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/users';
   games!: Game[];
 
   constructor(private authService: AuthService, private http: HttpClient) { }
 
-  addToWatchlist(game: Game): Observable<void> {
+  addToPlaylist(game: Game): Observable<void> {
     return this.authService.userId.pipe(
       switchMap(userId => {
         if (!userId) {
@@ -28,7 +28,7 @@ export class WatchlistService {
     );
   }
 
-  removeFromWatchlist(animeId: string): Observable<void> {
+  removeFromPlaylist(animeId: string): Observable<void> {
     return this.authService.userId.pipe(
       switchMap(userId => {
         if (!userId) {
@@ -40,7 +40,7 @@ export class WatchlistService {
     );
   }
 
-  getAnimesFromWatchlist(userId: string): Observable<Game[]> {
+  getGamesFromPlaylist(userId: string): Observable<Game[]> {
     const userWatchlistUrl = `${this.dbUrl}/${userId}/watchlist.json`;
     return this.http.get<{ [key: string]: Game }>(userWatchlistUrl).pipe(
       map(gamesData => {
@@ -63,7 +63,7 @@ export class WatchlistService {
     );
   }
 
-  isAnimeInWatchlist(animeId: string): Observable<boolean> {
+  isGameInPlaylist(animeId: string): Observable<boolean> {
     return this.authService.userId.pipe(
       switchMap(userId => {
         if (!userId) {

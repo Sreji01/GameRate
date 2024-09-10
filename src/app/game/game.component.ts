@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Game } from "../game.model";
 import { AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
-import { WatchlistService } from "../services/watchlist.service";
+import { PlaylistService } from "../services/playlist.service";
 
 @Component({
   selector: 'app-game',
@@ -12,30 +12,30 @@ import { WatchlistService } from "../services/watchlist.service";
 export class GameComponent implements OnInit {
   @Input() game!: Game;
   @Output() gameRemoved = new EventEmitter<string>();
-  isInWatchlist: boolean = false;
+  isInPlaylist: boolean = false;
 
-  constructor(private router: Router, private alertCtrl: AlertController, private watchlistService: WatchlistService) { }
+  constructor(private router: Router, private alertCtrl: AlertController, private playlistService: PlaylistService) { }
 
   ngOnInit() {
-    this.checkWatchlistStatus();
+    this.checkPlaylistStatus();
   }
 
-  checkWatchlistStatus() {
-    this.watchlistService.isAnimeInWatchlist(this.game.id).subscribe(isInWatchlist => {
-      this.isInWatchlist = isInWatchlist;
+  checkPlaylistStatus() {
+    this.playlistService.isGameInPlaylist(this.game.id).subscribe(isInPlaylist => {
+      this.isInPlaylist = isInPlaylist;
     });
   }
 
   async openAlert(event: MouseEvent) {
     event.preventDefault();
 
-    if (this.isInWatchlist) {
-      this.watchlistService.removeFromWatchlist(this.game.id).subscribe(async () => {
-        this.isInWatchlist = false;
+    if (this.isInPlaylist) {
+      this.playlistService.removeFromPlaylist(this.game.id).subscribe(async () => {
+        this.isInPlaylist = false;
         this.gameRemoved.emit(this.game.id);
 
         const alert = await this.alertCtrl.create({
-          message: "Removed from the Watchlist!",
+          message: "Removed from the Playlist!",
           cssClass: 'custom-alert'
         });
         await alert.present();
@@ -45,11 +45,11 @@ export class GameComponent implements OnInit {
         }, 1000);
       });
     } else {
-      this.watchlistService.addToWatchlist(this.game).subscribe(async () => {
-        this.isInWatchlist = true;
+      this.playlistService.addToPlaylist(this.game).subscribe(async () => {
+        this.isInPlaylist = true;
 
         const alert = await this.alertCtrl.create({
-          message: "Added to the Watchlist!",
+          message: "Added to the Playlist!",
           cssClass: 'custom-alert'
         });
         await alert.present();
@@ -61,13 +61,13 @@ export class GameComponent implements OnInit {
     }
   }
 
-  navigateToDetails(animeId: string, event: MouseEvent) {
-    if ((event.target as HTMLElement).classList.contains('watchlist-icon')) {
+  navigateToDetails(gameId: string, event: MouseEvent) {
+    if ((event.target as HTMLElement).classList.contains('playlist-icon')) {
       return;
     }
 
     const currentUrl = this.router.url;
     const baseUrl = currentUrl.split('/')[1];
-    this.router.navigateByUrl(`/${baseUrl}/game-details/${animeId}`);
+    this.router.navigateByUrl(`/${baseUrl}/game-details/${gameId}`);
   }
 }

@@ -23,7 +23,7 @@ export class SearchPage implements OnInit {
   }
 
   loadAnimes() {
-    this.gameService.getAnimes().subscribe(games => {
+    this.gameService.getGames().subscribe(games => {
       this.games = games;
       this.filteredGames = games;
     });

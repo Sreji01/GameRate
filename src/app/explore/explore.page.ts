@@ -17,7 +17,7 @@ export class ExplorePage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.gameService.getAnimes().subscribe((games) =>{
+    this.gameService.getGames().subscribe((games) =>{
       this.games = games;
     });
   }

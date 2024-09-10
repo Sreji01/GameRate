@@ -14,8 +14,8 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'watchlist',
-    loadChildren: () => import('./watchlist/watchlist.module').then(m => m.WatchlistPageModule),
+    path: 'playlist',
+    loadChildren: () => import('./playlist/playlist.module').then(m => m.WatchlistPageModule),
     canActivate: [authGuard]
   },
   {
@@ -29,7 +29,7 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'watchlist/game-details/:id',
+    path: 'playlist/game-details/:id',
     loadChildren: () => import('./game-details/game-details.module').then(m => m.AnimeDetailsPageModule),
     canActivate: [authGuard]
   },

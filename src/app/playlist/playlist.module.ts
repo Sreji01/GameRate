@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { WatchlistPageRoutingModule } from './watchlist-routing.module';
+import { WatchlistPageRoutingModule } from './playlist-routing.module';
 
-import { WatchlistPage } from './watchlist.page';
+import { PlaylistPage } from './playlist.page';
 import {SharedModule} from "../../shared.module";
 
 @NgModule({
@@ -17,6 +17,6 @@ import {SharedModule} from "../../shared.module";
     WatchlistPageRoutingModule,
     SharedModule
   ],
-  declarations: [WatchlistPage]
+  declarations: [PlaylistPage]
 })
 export class WatchlistPageModule {}

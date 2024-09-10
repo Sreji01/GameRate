@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from "../game.model";
-import { WatchlistService } from "../services/watchlist.service";
+import { PlaylistService } from "../services/playlist.service";
 import { switchMap, take } from "rxjs/operators";
 import { AuthService } from "../services/auth.service";
 
 @Component({
-  selector: 'app-watchlist',
-  templateUrl: './watchlist.page.html',
-  styleUrls: ['./watchlist.page.scss'],
+  selector: 'app-playlist',
+  templateUrl: './playlist.page.html',
+  styleUrls: ['./playlist.page.scss'],
 })
-export class WatchlistPage implements OnInit {
+export class PlaylistPage implements OnInit {
   games: Game[] = [];
   error: string | null = null;
 
-  constructor(private watchlistService: WatchlistService, private authService: AuthService) {}
+  constructor(private watchlistService: PlaylistService, private authService: AuthService) {}
 
   ngOnInit() {}
 
@@ -24,7 +24,7 @@ export class WatchlistPage implements OnInit {
         if (!userId) {
           throw new Error('User ID not available');
         }
-        return this.watchlistService.getAnimesFromWatchlist(userId);
+        return this.watchlistService.getGamesFromPlaylist(userId);
       })
     ).subscribe({
       next: (games) => {

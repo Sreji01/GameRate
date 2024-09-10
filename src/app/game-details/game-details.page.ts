@@ -10,7 +10,7 @@ import { switchMap } from 'rxjs/operators';
 import { ReviewData } from "../services/review.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AlertController } from "@ionic/angular";
-import {WatchlistService} from "../services/watchlist.service";
+import {PlaylistService} from "../services/playlist.service";
 
 @Component({
   selector: 'app-game-details',
@@ -44,7 +44,7 @@ export class GameDetailsPage implements OnInit {
     private reviewService: ReviewService,
     private authService: AuthService,
     private alertCtrl: AlertController,
-    private watchlistService: WatchlistService
+    private watchlistService: PlaylistService
   ) {}
 
   ngOnInit() {
@@ -52,7 +52,7 @@ export class GameDetailsPage implements OnInit {
       switchMap(paramMap => {
         const gameId = paramMap.get('id');
         if (gameId !== null) {
-          this.game = this.gameService.getAnime(gameId)!;
+          this.game = this.gameService.getGame(gameId)!;
           return this.authService.userId.pipe(
             switchMap(userId => {
               return this.reviewService.getReview(gameId, userId!);
@@ -86,7 +86,7 @@ export class GameDetailsPage implements OnInit {
   }
 
   checkWatchlistStatus() {
-    this.watchlistService.isAnimeInWatchlist(this.game.id).subscribe(isInWatchlist => {
+    this.watchlistService.isGameInPlaylist(this.game.id).subscribe(isInWatchlist => {
       this.isInWatchlist = isInWatchlist;
     });
   }
@@ -306,7 +306,7 @@ export class GameDetailsPage implements OnInit {
   async openAlert(event: MouseEvent) {
 
     if (this.isInWatchlist) {
-      this.watchlistService.removeFromWatchlist(this.game.id).subscribe(async () => {
+      this.watchlistService.removeFromPlaylist(this.game.id).subscribe(async () => {
         this.isInWatchlist = false;
         this.gameRemoved.emit(this.game.id);
 
@@ -318,7 +318,7 @@ export class GameDetailsPage implements OnInit {
         await alert.present();
       });
     } else {
-      this.watchlistService.addToWatchlist(this.game).subscribe(async () => {
+      this.watchlistService.addToPlaylist(this.game).subscribe(async () => {
         this.isInWatchlist = true;
 
         const alert = await this.alertCtrl.create({

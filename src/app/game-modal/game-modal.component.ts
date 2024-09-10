@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from "@ionic/angular";
 import { Game } from "../game.model";
 import { GameService } from "../services/game.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReviewService } from "../services/review.service";
 
 @Component({
@@ -33,7 +33,7 @@ export class GameModalComponent implements OnInit {
   }
 
   loadAnimes() {
-    this.gameService.getAnimes().subscribe(games => {
+    this.gameService.getGames().subscribe(games => {
       this.games = games;
       this.filteredGames = games;
     });
