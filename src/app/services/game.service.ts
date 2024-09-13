@@ -10,7 +10,7 @@ import {map} from "rxjs";
 export class GameService {
 
   games: Game[] = [];
-  dbUrl: string = "https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/animes.json"
+  dbUrl: string = "https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/games.json"
   constructor(private http: HttpClient) { }
 
   getGame(id: string) {

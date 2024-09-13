@@ -16,16 +16,16 @@ export class ReviewService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  addReview(animeId: string, headline: string, content: string, rating: number): Observable<any> {
+  addReview(gameId: string, headline: string, content: string, rating: number): Observable<any> {
     return this.authService.userId.pipe(
       take(1),
       switchMap(userId => {
         if (!userId) {
           throw new Error('User ID not available');
         }
-        const reviewUrl = `${this.dbUrl}/${encodeURIComponent(animeId)}/${userId}.json`;
-        const reviewsUrl = `${this.dbUrl}/${encodeURIComponent(animeId)}.json`;
-        const animeUrl = `https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/animes/${encodeURIComponent(animeId)}.json`;
+        const reviewUrl = `${this.dbUrl}/${encodeURIComponent(gameId)}/${userId}.json`;
+        const reviewsUrl = `${this.dbUrl}/${encodeURIComponent(gameId)}.json`;
+        const gameUrl = `https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/games/${encodeURIComponent(gameId)}.json`;
 
         return this.http.get(reviewUrl).pipe(
           switchMap(existingReview => {
@@ -45,7 +45,7 @@ export class ReviewService {
                   const ratings = Object.values(reviews).map(review => review.rating);
                   const averageRating = ratings.reduce((sum, current) => sum + current, 0) / ratings.length;
 
-                  return this.http.patch(animeUrl, { rating: averageRating });
+                  return this.http.patch(gameUrl, { rating: averageRating });
                 })
               );
             }
@@ -55,7 +55,7 @@ export class ReviewService {
     );
   }
 
-  editReview(animeId: string, headline: string, content: string, rating: number): Observable<any> {
+  editReview(gameId: string, headline: string, content: string, rating: number): Observable<any> {
     return this.authService.userId.pipe(
       take(1),
       switchMap(userId => {
@@ -68,9 +68,9 @@ export class ReviewService {
           rating: rating
         };
 
-        const reviewUrl = `${this.dbUrl}/${encodeURIComponent(animeId)}/${userId}.json`;
-        const reviewsUrl = `${this.dbUrl}/${encodeURIComponent(animeId)}.json`;
-        const animeUrl = `https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/animes/${encodeURIComponent(animeId)}.json`;
+        const reviewUrl = `${this.dbUrl}/${encodeURIComponent(gameId)}/${userId}.json`;
+        const reviewsUrl = `${this.dbUrl}/${encodeURIComponent(gameId)}.json`;
+        const gameUrl = `https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/games/${encodeURIComponent(gameId)}.json`;
 
         return this.http.put(reviewUrl, updatedReview).pipe(
           switchMap(() => {
@@ -81,14 +81,14 @@ export class ReviewService {
             const averageRating = ratings.length > 0
               ? ratings.reduce((sum, current) => sum + current, 0) / ratings.length : 0;
 
-            return this.http.patch(animeUrl, { rating: averageRating });
+            return this.http.patch(gameUrl, { rating: averageRating });
           })
         );
       })
     );
   }
 
-  deleteReview(animeId: string): Observable<any> {
+  deleteReview(gameId: string): Observable<any> {
     return this.authService.userId.pipe(
       take(1),
       switchMap(userId => {
@@ -96,9 +96,9 @@ export class ReviewService {
           throw new Error('User ID not available');
         }
 
-        const reviewUrl = `${this.dbUrl}/${encodeURIComponent(animeId)}/${userId}.json`;
-        const reviewsUrl = `${this.dbUrl}/${encodeURIComponent(animeId)}.json`;
-        const animeUrl = `https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/animes/${encodeURIComponent(animeId)}.json`;
+        const reviewUrl = `${this.dbUrl}/${encodeURIComponent(gameId)}/${userId}.json`;
+        const reviewsUrl = `${this.dbUrl}/${encodeURIComponent(gameId)}.json`;
+        const gameUrl = `https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/games/${encodeURIComponent(gameId)}.json`;
 
         return this.http.delete(reviewUrl).pipe(
           switchMap(() => this.http.get<{ [key: string]: { rating: number } } | null>(reviewsUrl)),
@@ -113,15 +113,15 @@ export class ReviewService {
               }
             }
 
-            return this.http.patch(animeUrl, { rating: averageRating });
+            return this.http.patch(gameUrl, { rating: averageRating });
           })
         );
       })
     );
   }
 
-  getAverageRating(animeId: string): Observable<number> {
-    const reviewsUrl = `${this.dbUrl}/${encodeURIComponent(animeId)}.json`;
+  getAverageRating(gameId: string): Observable<number> {
+    const reviewsUrl = `${this.dbUrl}/${encodeURIComponent(gameId)}.json`;
     return this.http.get<{ [key: string]: { rating: number } }>(reviewsUrl).pipe(
       switchMap(reviews => {
         let averageRating = 0;
@@ -138,8 +138,8 @@ export class ReviewService {
     );
   }
 
-  getReview(animeId: string, userId: string): Observable<ReviewData | null> {
-    const url = `${this.dbUrl}/${encodeURIComponent(animeId)}/${userId}.json`;
+  getReview(gameId: string, userId: string): Observable<ReviewData | null> {
+    const url = `${this.dbUrl}/${encodeURIComponent(gameId)}/${userId}.json`;
     return this.http.get<ReviewData | null>(url);
   }
 }

@@ -20,29 +20,29 @@ export class PlaylistService {
         if (!userId) {
           throw new Error('User not authenticated');
         }
-        const userWatchlistUrl = `${this.dbUrl}/${userId}/watchlist/${game.id}.json`;
+        const userPlaylistUrl = `${this.dbUrl}/${userId}/playlist/${game.id}.json`;
 
-        return this.http.put<void>(userWatchlistUrl,
+        return this.http.put<void>(userPlaylistUrl,
           { id: game.id, title: game.title, year: game.year, imageUrl: game.imageUrl, posterUrl: game.posterUrl, description: game.description });
       })
     );
   }
 
-  removeFromPlaylist(animeId: string): Observable<void> {
+  removeFromPlaylist(gameId: string): Observable<void> {
     return this.authService.userId.pipe(
       switchMap(userId => {
         if (!userId) {
           throw new Error('User not authenticated');
         }
-        const userWatchlistUrl = `${this.dbUrl}/${userId}/watchlist/${animeId}.json`;
-        return this.http.delete<void>(userWatchlistUrl);
+        const userPlaylistUrl = `${this.dbUrl}/${userId}/playlist/${gameId}.json`;
+        return this.http.delete<void>(userPlaylistUrl);
       })
     );
   }
 
   getGamesFromPlaylist(userId: string): Observable<Game[]> {
-    const userWatchlistUrl = `${this.dbUrl}/${userId}/watchlist.json`;
-    return this.http.get<{ [key: string]: Game }>(userWatchlistUrl).pipe(
+    const userPlaylistUrl = `${this.dbUrl}/${userId}/playlist.json`;
+    return this.http.get<{ [key: string]: Game }>(userPlaylistUrl).pipe(
       map(gamesData => {
         const games: Game[] = [];
         for (const key in gamesData) {
@@ -63,14 +63,14 @@ export class PlaylistService {
     );
   }
 
-  isGameInPlaylist(animeId: string): Observable<boolean> {
+  isGameInPlaylist(gameId: string): Observable<boolean> {
     return this.authService.userId.pipe(
       switchMap(userId => {
         if (!userId) {
           throw new Error('User not authenticated');
         }
-        const userWatchlistUrl = `${this.dbUrl}/${userId}/watchlist/${animeId}.json`;
-        return this.http.get<Game>(userWatchlistUrl).pipe(
+        const userPlaylistUrl = `${this.dbUrl}/${userId}/playlist/${gameId}.json`;
+        return this.http.get<Game>(userPlaylistUrl).pipe(
           map(anime => !!anime)
         );
       })

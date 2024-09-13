@@ -3,8 +3,7 @@
   <div class="game-info">
     <div class="game-title">{{game.title}}</div>
     <div class="small-title" *ngIf="game.title === 'Bleach: Thousand-Year Blood War'">{{game.title}}</div>
-    <div class="mid-title" *ngIf="game.title === 'Fullmetal Alchemist: Brotherhood'">{{game.title}}</div>
-    <div class="mid-title" *ngIf="game.title === 'Boruto: Naruto Next Generations'">{{game.title}}</div>
+    <div class="mid-title" *ngIf="game.title === 'Counter-Strike: Global Offensive'">{{game.title}}</div>
     <ion-icon *ngIf="!isInPlaylist" name="add-circle-outline" class="playlist-icon" (click)="openAlert($event)"></ion-icon>
     <ion-icon *ngIf="isInPlaylist" name="remove-circle-outline" class="playlist-icon" (click)="openAlert($event)"></ion-icon>
   </div>
