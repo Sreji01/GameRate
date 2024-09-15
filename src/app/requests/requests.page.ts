@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from "../services/auth.service";
 import { AlertController } from "@ionic/angular";
 
@@ -9,8 +9,12 @@ import { AlertController } from "@ionic/angular";
 })
 export class RequestsPage implements OnInit {
   admins: any[] = [];
+  @Output() adminRemoved = new EventEmitter<string>();
 
-  constructor(private authService: AuthService, private alertCtrl: AlertController) { }
+  constructor(
+    private authService: AuthService,
+    private alertCtrl: AlertController,
+  ) { }
 
   ngOnInit() {
     this.authService.getAdminsToApprove().subscribe(data => {
@@ -18,6 +22,8 @@ export class RequestsPage implements OnInit {
         id: key,
         ...data[key]
       }));
+
+      this.authService.setAdminRequestCount(this.admins.length);
     });
   }
 
@@ -36,6 +42,9 @@ export class RequestsPage implements OnInit {
       this.authService.deleteAdminData(admin.id).subscribe({
         next: () => {
           this.admins = this.admins.filter(a => a.id !== admin.id);
+          this.adminRemoved.emit(admin.id);
+
+          this.authService.setAdminRequestCount(this.admins.length);
         },
         error: (error) => {
           console.error('Error deleting admin:', error);
@@ -58,6 +67,9 @@ export class RequestsPage implements OnInit {
         }, 1000);
 
         this.admins = this.admins.filter(a => a.id !== admin.id);
+        this.adminRemoved.emit(admin.id);
+
+        this.authService.setAdminRequestCount(this.admins.length);
       },
       error: (error) => {
         console.error('Error rejecting admin:', error);

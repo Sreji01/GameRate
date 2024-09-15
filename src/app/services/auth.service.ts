@@ -34,7 +34,13 @@ export class AuthService {
   private _user = new BehaviorSubject<User | null>(null);
   private dbUrl = 'https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app';
   isLoading = new BehaviorSubject<boolean>(false);
+  private adminRequestCountSource = new BehaviorSubject<number>(0);
+  adminRequestCount$ = this.adminRequestCountSource.asObservable();
   constructor(private http: HttpClient, private router: Router) { }
+
+  setAdminRequestCount(count: number) {
+    this.adminRequestCountSource.next(count);
+  }
 
   getAdminsToApprove(): Observable<any> {
     return this.http.get<any>(`${this.dbUrl}/adminsToApprove.json`);

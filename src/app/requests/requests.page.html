@@ -1,6 +1,8 @@
 <ion-content>
   <div class="list-wrapper">
-    <h1 class="heading">Admin Requests</h1>
+    <h1 class="heading">
+      {{ admins.length === 0 ? 'No requests...' : 'Admin Requests:' }}
+    </h1>
     <ion-list>
       <ion-item *ngFor="let admin of admins">
         <ion-avatar slot="start">

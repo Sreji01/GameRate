@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { UserPopoverComponent } from '../user-popover/user-popover.component';
-import {AuthService} from "../services/auth.service";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -11,8 +11,12 @@ import {AuthService} from "../services/auth.service";
 export class HeaderComponent implements OnInit {
   @Input() username!: string;
   role: string = '';
+  adminRequestCount: number = 0;
 
-  constructor(private popoverCtrl: PopoverController, private authService: AuthService) { }
+  constructor(
+    private popoverCtrl: PopoverController,
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() {
     this.authService.userId.subscribe(userId => {
@@ -20,6 +24,11 @@ export class HeaderComponent implements OnInit {
         this.authService.getUserData(userId).subscribe(
           userData => {
             this.role = userData.role || '';
+            if (this.role === 'admin') {
+              this.authService.adminRequestCount$.subscribe(count => {
+                this.adminRequestCount = count;
+              });
+            }
           },
           error => {
             console.error('Failed to fetch user data:', error);

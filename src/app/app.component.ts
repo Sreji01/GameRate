@@ -30,6 +30,9 @@ export class AppComponent implements OnInit {
         this.authService.getUserData(userId).subscribe(
           userData => {
             this.username = userData.username || '';
+            this.authService.getAdminsToApprove().subscribe((data) => {
+              this.authService.setAdminRequestCount(Object.keys(data).length);
+            });
           },
           error => {
             console.error('Failed to fetch user data:', error);

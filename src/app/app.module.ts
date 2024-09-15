@@ -13,7 +13,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {UserPopoverComponent} from "./user-popover/user-popover.component";
 
 @NgModule({
-    declarations: [AppComponent, HeaderComponent, GameModalComponent, UserPopoverComponent],
+  declarations: [AppComponent, HeaderComponent, GameModalComponent, UserPopoverComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ReactiveFormsModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

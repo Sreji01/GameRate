@@ -8,6 +8,7 @@
         <ion-title color="primary">
           <span class="span">Welcome </span>
           <span (click)="presentPopover($event)" class="clickable-username">{{ username }}</span>
+          <ion-badge *ngIf="adminRequestCount > 0" color="danger">{{ adminRequestCount }}</ion-badge>
         </ion-title>
       </ion-col>
     </ion-row>
