@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {BehaviorSubject, catchError, map, tap, throwError} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, tap, throwError} from "rxjs";
 import {User} from "../auth/user.model";
 import {Router} from "@angular/router";
 
@@ -32,9 +32,13 @@ export class AuthService {
 
   private _isUserAuthenticated = false;
   private _user = new BehaviorSubject<User | null>(null);
-  private dbUrl = 'https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/users';
+  private dbUrl = 'https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app';
   isLoading = new BehaviorSubject<boolean>(false);
   constructor(private http: HttpClient, private router: Router) { }
+
+  getAdminsToApprove(): Observable<any> {
+    return this.http.get<any>(`${this.dbUrl}/adminsToApprove.json`);
+  }
 
   get isUserAuthenticated() {
     return this._user.asObservable().pipe(
@@ -76,7 +80,7 @@ export class AuthService {
   }
 
   private saveUserData(userId: string, user: UserData) {
-    return this.http.put(`${this.dbUrl}/${userId}.json`, {
+    return this.http.put(`${this.dbUrl}/users/${userId}.json`, {
       email: user.email,
       username: user.username,
       name: user.name,
@@ -97,6 +101,7 @@ export class AuthService {
       name: user.name,
       surname: user.surname,
       password: user.password,
+      role: user.role
     };
 
     const adminsToApproveUrl = 'https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/adminsToApprove.json'
@@ -104,6 +109,16 @@ export class AuthService {
       catchError(error => {
         console.error('Error saving user data:', error);
         return throwError('Failed to save user data');
+      })
+    );
+  }
+
+  deleteAdminData(adminId: string) {
+    const adminToDeleteUrl = `https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/adminsToApprove/${adminId}.json`;
+    return this.http.delete(adminToDeleteUrl).pipe(
+      catchError(error => {
+        console.error('Error deleting admin data:', error);
+        return throwError('Failed to delete admin data');
       })
     );
   }
@@ -127,7 +142,7 @@ export class AuthService {
   }
 
   getUserData(userId: string) {
-    return this.http.get<UserData>(`${this.dbUrl}/${userId}.json`).pipe(
+    return this.http.get<UserData>(`${this.dbUrl}/users/${userId}.json`).pipe(
       map(data => {
         if (data) {
           return {

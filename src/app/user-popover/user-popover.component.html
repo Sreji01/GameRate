@@ -4,6 +4,10 @@
       <ion-icon name="person-circle-outline" slot="start" color="primary"></ion-icon>
       <ion-label color="secondary">Profile</ion-label>
     </ion-item>
+    <ion-item (click)="navigateToRequests()" *ngIf="role === 'admin'">
+      <ion-icon name="notifications-outline" slot="start" color="primary"></ion-icon>
+      <ion-label color="secondary">Requests</ion-label>
+    </ion-item>
     <ion-item (click)="onLogout()">
       <ion-icon name="log-out-outline" slot="start" color="primary"></ion-icon>
       <ion-label color="secondary">Log Out</ion-label>

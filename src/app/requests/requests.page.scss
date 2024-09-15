@@ -1,0 +1,36 @@
+.avatar-icon {
+  color: #3880ff;
+  font-size: 36px;
+}
+
+.username {
+  color: var(--ion-color-primary);
+}
+
+.email {
+  color: var(--ion-color-secondary);
+}
+
+.list-wrapper {
+  width: 100%;
+  max-width: 550px;
+  height: 70vh;
+  overflow-y: auto;
+  margin: 0 auto;
+}
+
+ion-button {
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.action-icon {
+  font-size: 30px;
+}
+
+.heading {
+  text-align: center;
+  font-size: 24px;
+  margin-top: 20px;
+  color: var(--ion-color-secondary);
+}

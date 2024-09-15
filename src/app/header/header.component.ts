@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { UserPopoverComponent } from '../user-popover/user-popover.component';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -9,16 +10,33 @@ import { UserPopoverComponent } from '../user-popover/user-popover.component';
 })
 export class HeaderComponent implements OnInit {
   @Input() username!: string;
+  role: string = '';
 
-  constructor(private popoverCtrl: PopoverController) { }
+  constructor(private popoverCtrl: PopoverController, private authService: AuthService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.userId.subscribe(userId => {
+      if (userId) {
+        this.authService.getUserData(userId).subscribe(
+          userData => {
+            this.role = userData.role || '';
+          },
+          error => {
+            console.error('Failed to fetch user data:', error);
+          }
+        );
+      }
+    });
+  }
 
   async presentPopover(event: Event) {
     const popover = await this.popoverCtrl.create({
       component: UserPopoverComponent,
       event,
-      translucent: true
+      translucent: true,
+      componentProps: {
+        role: this.role
+      }
     });
     await popover.present();
   }

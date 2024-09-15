@@ -1,0 +1,24 @@
+<ion-content>
+  <div class="list-wrapper">
+    <h1 class="heading">Admin Requests</h1>
+    <ion-list>
+      <ion-item *ngFor="let admin of admins">
+        <ion-avatar slot="start">
+          <ion-icon name="person-add-outline" class="avatar-icon" color="primary"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2 class="username">{{ admin.username }}</h2>
+          <p class="email">{{ admin.email }}</p>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button (click)="acceptAdmin(admin)" color="success">
+            <ion-icon name="checkmark-circle-outline" class="action-icon"></ion-icon>
+          </ion-button>
+          <ion-button (click)="rejectAdmin(admin)" color="danger">
+            <ion-icon name="close-circle-outline" class="action-icon"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

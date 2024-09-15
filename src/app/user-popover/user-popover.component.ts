@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Router } from "@angular/router";
@@ -9,6 +9,7 @@ import { Router } from "@angular/router";
   styleUrls: ['./user-popover.component.scss'],
 })
 export class UserPopoverComponent {
+  role!: string
   constructor(
     private popoverCtrl: PopoverController,
     private authService: AuthService,
@@ -22,6 +23,11 @@ export class UserPopoverComponent {
 
   navigateToProfile(){
     this.router.navigateByUrl('/profile');
+    this.popoverCtrl.dismiss();
+  }
+
+  navigateToRequests(){
+    this.router.navigateByUrl('/requests');
     this.popoverCtrl.dismiss();
   }
 }
