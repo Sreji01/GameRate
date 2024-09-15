@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
-import { LoadingController } from "@ionic/angular";
+import {AlertController, LoadingController} from "@ionic/angular";
 import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
@@ -15,8 +15,10 @@ export class RegisterPage implements OnInit {
   constructor(
     private authService: AuthService,
     private loadingController: LoadingController,
-    private router: Router
-  ) { }
+    private router: Router,
+    private alertCtrl: AlertController
+  ) {
+  }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -25,6 +27,7 @@ export class RegisterPage implements OnInit {
       username: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+      isAdmin: new FormControl(null)
     });
 
     this.router.events.subscribe(event => {
@@ -36,25 +39,10 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  onRegister() {
-    this.loadingController.create({ message: 'Registering ...' }).then(loadingEl => {
-      loadingEl.present();
-
-      this.authService.register(this.registerForm.value).subscribe(
-        resData => {
-          loadingEl.dismiss();
-          this.router.navigateByUrl('/log-in');
-        },
-        error => {
-          loadingEl.dismiss();
-        }
-      );
-    });
-  }
-
   resetForm() {
     if (this.registerForm) {
       this.registerForm.reset();
+
       Object.keys(this.registerForm.controls).forEach(key => {
         const control = this.registerForm.get(key);
         if (control) {
@@ -64,5 +52,72 @@ export class RegisterPage implements OnInit {
         }
       });
     }
+  }
+
+  onRegister() {
+    const userRole = this.registerForm.get('isAdmin')?.value ? 'admin' : 'user';
+
+    const userData = {
+      name: this.registerForm.get('name')?.value,
+      surname: this.registerForm.get('surname')?.value,
+      username: this.registerForm.get('username')?.value,
+      email: this.registerForm.get('email')?.value,
+      password: this.registerForm.get('password')?.value,
+      role: userRole
+    };
+
+    if (userRole === 'user' || (userRole === 'admin' && userData.email === 'admin@gmail.com' && userData.password === 'admin123')) {
+      this.loadingController.create({ message: 'Registering...' }).then(loadingEl => {
+        loadingEl.present();
+
+        this.authService.register(userData).subscribe(
+          () => {
+            loadingEl.dismiss();
+            this.router.navigateByUrl('/log-in');
+          },
+          error => {
+            loadingEl.dismiss();
+            this.showAlert('Registration failed. Please try again.');
+          }
+        );
+      });
+    } else if (userRole === 'admin') {
+
+      this.loadingController.create({message: 'Sending register request...'}).then(loadingEl => {
+        loadingEl.present();
+
+        this.authService.saveAdminData(userData).subscribe(
+          () => {
+            loadingEl.dismiss();
+            this.showAlert('Admin registration request submitted. Wait for approval.');
+          },
+          error => {
+            loadingEl.dismiss();
+            this.showAlert('Error saving user data. Please try again.');
+          }
+        );
+      });
+    }
+  }
+
+  register(){
+
+  }
+
+  private showAlert(message: string) {
+    this.alertCtrl.create({
+      header: 'Alert',
+      message: message,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.router.navigateByUrl('/log-in');
+            this.resetForm();
+          }
+        }
+      ],
+      cssClass: 'custom-alert'
+    }).then(alertEl => alertEl.present());
   }
 }

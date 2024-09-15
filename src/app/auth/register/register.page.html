@@ -66,8 +66,23 @@
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
+        <ion-col size-sm="4" size-md="6" size-lg="6" sizeXl="4">
+          <ion-item lines="none">
+            <ion-label color="secondary">Register as admin</ion-label>
+            <ion-checkbox class="custom-checkbox" formControlName="isAdmin" slot="end"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
         <ion-col size-xs="9" size-md="5" size-lg="5" size-xl="3">
-          <ion-button type="submit" expand="block" color="primary" shape="round" [disabled]="registerForm.invalid">Register</ion-button>
+          <ion-button *ngIf="!registerForm.get('isAdmin')?.value" type="submit" expand="block" color="primary" shape="round" [disabled]="registerForm.invalid">
+            Register
+          </ion-button>
+
+          <ion-button *ngIf="registerForm.get('isAdmin')?.value" type="submit" expand="block" color="primary" shape="round" [disabled]="registerForm.invalid">
+            Send register request
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

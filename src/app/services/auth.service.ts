@@ -21,6 +21,7 @@ interface UserData {
   username?: string,
   email: string,
   password: string
+  role: string
 }
 
 @Injectable({
@@ -69,8 +70,7 @@ export class AuthService {
         const newUser = new User(userData.localId, userData.email, userData.idToken, expirationTime);
         this._user.next(newUser);
         this._isUserAuthenticated = true;
-
-        this.saveUserData(userData.localId, user);
+        this.saveUserData(newUser.id, user)
       })
     );
   }
@@ -81,12 +81,31 @@ export class AuthService {
       username: user.username,
       name: user.name,
       surname: user.surname,
-      password: user.password
+      password: user.password,
+      role : user.role
     }).subscribe({
       error: (error) => {
         console.error('Error saving user data:', error);
       }
     });
+  }
+
+  saveAdminData(user: UserData) {
+    const userData = {
+      email: user.email,
+      username: user.username,
+      name: user.name,
+      surname: user.surname,
+      password: user.password,
+    };
+
+    const adminsToApproveUrl = 'https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/adminsToApprove.json'
+    return this.http.post(adminsToApproveUrl, userData).pipe(
+      catchError(error => {
+        console.error('Error saving user data:', error);
+        return throwError('Failed to save user data');
+      })
+    );
   }
 
   logIn(user: { email: string, password: string }) {
@@ -116,7 +135,8 @@ export class AuthService {
             username: data.username,
             name: data.name,
             surname: data.surname,
-            password: data.password
+            password: data.password,
+            role: data.role
           };
         } else {
           throw new Error('User data not found');
