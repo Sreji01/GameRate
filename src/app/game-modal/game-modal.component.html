@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="secondary">Add a Game</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close-circle-outline" color="primary" class="close-modal-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="gameForm" (ngSubmit)="submitGame()">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2">
+          <ion-item class="custom-item">
+            <ion-label position="floating" color="secondary" class="custom-label">Game Title</ion-label>
+            <ion-input formControlName="title" type="text" class="custom-input"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2">
+          <ion-item class="custom-item">
+            <ion-label position="floating" color="secondary" class="custom-label">Game Year</ion-label>
+            <ion-input formControlName="year" type="number" class="custom-input"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2">
+          <ion-item class="custom-item">
+            <ion-label position="floating" color="secondary" class="custom-label">Game Image URL</ion-label>
+            <ion-input formControlName="imageUrl" type="url" class="custom-input"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2">
+          <ion-item class="custom-item">
+            <ion-label position="floating" color="secondary" class="custom-label">Game Poster URL</ion-label>
+            <ion-input formControlName="posterUrl" type="url" class="custom-input"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2">
+          <ion-item class="custom-item">
+            <ion-label position="floating" color="secondary" class="custom-label">Game Description</ion-label>
+            <ion-textarea formControlName="description" class="custom-input"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2">
+          <ion-button expand="block" type="submit" [disabled]="gameForm.invalid">Add Game</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
