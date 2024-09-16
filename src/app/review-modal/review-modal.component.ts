@@ -6,11 +6,11 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReviewService } from "../services/review.service";
 
 @Component({
-  selector: 'app-game-modal',
-  templateUrl: './game-modal.component.html',
-  styleUrls: ['./game-modal.component.scss'],
+  selector: 'app-review-modal',
+  templateUrl: './review-modal.component.html',
+  styleUrls: ['./review-modal.component.scss'],
 })
-export class GameModalComponent implements OnInit {
+export class ReviewModalComponent implements OnInit {
 
   games: Game[] = [];
   filteredGames: Game[] = [];
@@ -19,6 +19,7 @@ export class GameModalComponent implements OnInit {
   reviewForm!: FormGroup;
   starsArray: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
   gameRating: number = 0;
+  role: string = '';
 
   constructor(
     private modalCtrl: ModalController,

@@ -1,11 +1,15 @@
-<ion-toolbar>
-  <ion-buttons slot="end">
-    <ion-button (click)="onCancel()">
-      <ion-icon name="close-circle-outline" color="primary" class="close-modal-icon"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="secondary">Add a Review</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close-circle-outline" color="primary" class="close-modal-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
+<br>
 <ion-content class="custom-modal-content">
   <div class="searchbar-container">
     <ion-searchbar class="custom-searchbar" animated="true" placeholder="Search games" color="secondary" show-cancel-button="focus" [(ngModel)]="searchTerm" (ionInput)="filterGames()"></ion-searchbar>

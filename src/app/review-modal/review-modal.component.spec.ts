@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { GameModalComponent } from './game-modal.component';
+import { ReviewModalComponent } from './review-modal.component';
 
 describe('AnimeModalComponent', () => {
-  let component: GameModalComponent;
-  let fixture: ComponentFixture<GameModalComponent>;
+  let component: ReviewModalComponent;
+  let fixture: ComponentFixture<ReviewModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameModalComponent ],
+      declarations: [ ReviewModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GameModalComponent);
+    fixture = TestBed.createComponent(ReviewModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
