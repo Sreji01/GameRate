@@ -1,0 +1,17 @@
+.game-textarea.ion-invalid {
+  border: 1px solid var(--ion-color-danger);
+  border-radius: 4px;
+  padding: 8px;
+  min-height: 150px;
+  margin-top: 10px;
+  color: var(--ion-color-primary);
+}
+
+.game-textarea.ion-valid {
+  border: 1px solid var(--ion-color-success);
+  border-radius: 4px;
+  padding: 8px;
+  min-height: 150px;
+  margin-top: 10px;
+  color: var(--ion-color-primary);
+}

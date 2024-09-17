@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Game } from '../game.model';
 import { GameService } from '../services/game.service';
 import { Router } from "@angular/router";
-import { ReviewService } from "../services/review.service";
 
 @Component({
   selector: 'app-search',
@@ -14,7 +13,7 @@ export class SearchPage implements OnInit {
   filteredGames: Game[] = [];
   searchTerm: string = '';
 
-  constructor(private gameService: GameService, private router: Router, private reviewService: ReviewService) { }
+  constructor(private gameService: GameService, private router: Router) { }
 
   ngOnInit() {}
 

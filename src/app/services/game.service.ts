@@ -13,6 +13,11 @@ export class GameService {
   dbUrl: string = "https://anime-app-1efe0-default-rtdb.europe-west1.firebasedatabase.app/games.json"
   constructor(private http: HttpClient) { }
 
+  addGame(game: Game) {
+    return this.http.post<{ name: string }>(this.dbUrl, game);
+  }
+
+
   getGame(id: string) {
     return this.games.find((g) => g.id === id)
   }
