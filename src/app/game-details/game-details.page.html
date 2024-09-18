@@ -8,11 +8,17 @@
     </div>
     <div class="game-info">
       <ion-grid>
-        <ion-row>
-          <ion-col size-xl="6" size-xs="10">
-            <h1 class="game-title">{{game.title}}</h1>
+        <ion-row class="row-with-icons">
+          <ion-col size="auto">
+            <div class="title-and-edit">
+              <h1 class="game-title">{{game.title}}</h1>
+              <div class="edit-icon-wrapper" (click)="onEditGame()" *ngIf="this.role === 'admin'">
+                <ion-icon name="create" class="edit-game-icon" color="primary"></ion-icon>
+                <span class="edit-text">EDIT</span>
+              </div>
+            </div>
           </ion-col>
-          <ion-col offset-xl="5" offset-xs="0">
+          <ion-col size="auto" class="playlist-icon-wrapper">
             <div class="icon-wrapper-playlist" (click)="openAlert($event)" *ngIf="!isInPlaylist">
               <ion-icon name="add-circle-outline" class="edit-icon" color="primary"></ion-icon>
               <span class="edit-text">ADD</span>
@@ -30,12 +36,20 @@
           <p class="game-description">{{game.description}}</p>
         </ion-row>
         <ion-row>
-          <div class="rating-container">
-            <ion-icon name="star"></ion-icon>
-            <p class="game-rating" *ngIf="game.rating > 0">{{ game.rating | number: '1.1-1' }}</p>
-            <p class="slash-ten" *ngIf="game.rating > 0">/10</p>
-            <p class="game-rating" *ngIf="game.rating === 0">N/A</p>
-          </div>
+          <ion-col size="auto">
+            <div class="rating-container">
+              <ion-icon name="star"></ion-icon>
+              <p class="game-rating" *ngIf="game.rating > 0">{{ game.rating | number: '1.1-1' }}</p>
+              <p class="slash-ten" *ngIf="game.rating > 0">/10</p>
+              <p class="game-rating" *ngIf="game.rating === 0">N/A</p>
+            </div>
+          </ion-col>
+          <ion-col size="auto" class="trash-icon-wrapper">
+            <div class="icon-wrapper-playlist" (click)="openDeleteGameQuestion()" *ngIf="this.role === 'admin'">
+              <ion-icon name="trash-outline" class="delete-icon" color="primary"></ion-icon>
+              <span class="edit-text">DELETE</span>
+            </div>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </div>

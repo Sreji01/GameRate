@@ -100,10 +100,6 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  register(){
-
-  }
-
   private showAlert(message: string) {
     this.alertCtrl.create({
       header: 'Alert',

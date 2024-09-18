@@ -31,18 +31,40 @@ export class LogInPage implements OnInit {
       return;
     }
 
+    const enteredEmail = form.value.email;
+    const enteredPassword = form.value.password;
+
     this.isLoading = true;
-    this.authService.logIn(form.value).subscribe(
-      resData => {
-        this.isLoading = false;
-        this.resetForm();
-        this.router.navigateByUrl('/explore');
+    this.authService.getAdminsToApprove().subscribe(adminsToApprove => {
+        let pendingAdmin = null;
+
+        for (let key in adminsToApprove) {
+          if (adminsToApprove[key].email === enteredEmail && adminsToApprove[key].password === enteredPassword) {
+            pendingAdmin = adminsToApprove[key];
+            break;
+          }
+        }
+        if (pendingAdmin) {
+          this.isLoading = false;
+          this.errorMessage = 'Waiting for approval, please come back later.';
+        } else {
+          this.authService.logIn(form.value).subscribe(
+            resData => {
+              this.isLoading = false;
+              this.resetForm();
+              this.router.navigateByUrl('/explore');
+            },
+            error => {
+              this.isLoading = false;
+              this.errorMessage = 'Invalid email or password. Please try again.';
+            }
+          );
+        }
       },
       error => {
         this.isLoading = false;
-        this.errorMessage = 'Invalid email or password. Please try again.';
-      }
-    );
+        this.errorMessage = 'Error fetching admin approval data. Please try again later.';
+      });
   }
 
   onNavigateToSignUp() {

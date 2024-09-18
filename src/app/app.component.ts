@@ -92,7 +92,8 @@ export class AppComponent implements OnInit {
                 backdropDismiss: true,
                 showBackdrop: false,
                 componentProps: {
-                  role: this.role
+                  role: this.role,
+                  type: 'add'
                 }
               }).then((modal) => {
                 modal.present();

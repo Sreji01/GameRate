@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Game } from '../game.model';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { GameService } from '../services/game.service';
 import { Location } from '@angular/common';
 import { ReviewService } from '../services/review.service';
@@ -9,8 +9,9 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ReviewData } from "../services/review.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { AlertController } from "@ionic/angular";
+import {AlertController, ModalController} from "@ionic/angular";
 import { PlaylistService } from "../services/playlist.service";
+import {GameModalComponent} from "../game-modal/game-modal.component";
 
 @Component({
   selector: 'app-game-details',
@@ -35,6 +36,10 @@ export class GameDetailsPage implements OnInit {
   disableContentInput: boolean = false;
   isInPlaylist: boolean = false;
   @Output() gameRemoved = new EventEmitter<string>();
+  role: string = ''
+  modalIsOpen: boolean = false
+  deleteType: string = ''
+
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +48,9 @@ export class GameDetailsPage implements OnInit {
     private reviewService: ReviewService,
     private authService: AuthService,
     private alertCtrl: AlertController,
-    private playlistService: PlaylistService
+    private playlistService: PlaylistService,
+    private modalCtrl: ModalController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -51,7 +58,7 @@ export class GameDetailsPage implements OnInit {
       switchMap(paramMap => {
         const gameId = paramMap.get('id');
         if (gameId !== null) {
-          this.game = this.gameService.getGame(gameId)!;
+          this.game = this.gameService.getGameLocal(gameId)!;
           return this.authService.userId.pipe(
             switchMap(userId => {
               return this.reviewService.getReview(gameId, userId!);
@@ -82,6 +89,19 @@ export class GameDetailsPage implements OnInit {
     });
 
     this.initializeForm();
+
+    this.authService.userId.subscribe(userId => {
+      if (userId) {
+        this.authService.getUserData(userId).subscribe(
+          userData => {
+            this.role = userData.role || '';
+          },
+          error => {
+            console.error('Failed to fetch user data:', error);
+          }
+        );
+      }
+    });
   }
 
   checkPlaylistStatus() {
@@ -329,4 +349,75 @@ export class GameDetailsPage implements OnInit {
       });
     }
   }
+
+  onEditGame(){
+    this.modalIsOpen = true;
+    this.modalCtrl.create({
+      component: GameModalComponent,
+      cssClass: 'custom-modal',
+      backdropDismiss: true,
+      showBackdrop: false,
+      componentProps: {
+        type: 'edit',
+        gameId: this.game.id
+      }
+    }).then((modal) => {
+      modal.present();
+      modal.onDidDismiss().then(() => {
+        this.modalIsOpen = false;
+      });
+    });
+  }
+
+  openDeleteGameQuestion() {
+    this.alertCtrl.create({
+      message: "Are you sure you want to delete this game?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.deleteGame(this.game.id);
+          }
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+        }
+      ],
+      cssClass: 'custom-alert'
+    }).then(alertEl => {
+      alertEl.present();
+    });
+  }
+  deleteGame(gameId: string) {
+    this.gameService.deleteGame(gameId).subscribe(
+      () => {
+        this.deleteType = 'game';
+        this.presentDeleteAlert().then(() => {
+          this.refresh();
+        });
+      },
+      (error) => {
+        console.error('Failed to delete game:', error);
+      }
+    );
+  }
+
+  refresh() {
+    const currentUrl = this.router.url;
+    const baseUrl = currentUrl.split('/',2)[1]
+    this.router.navigateByUrl(`/${baseUrl}`);
+  }
+
+  async presentDeleteAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Success',
+      message: 'Game deleted successfully!',
+      buttons: ['OK'],
+      cssClass: 'custom-alert'
+    });
+
+    await alert.present();
+  }
+
 }

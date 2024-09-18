@@ -3,6 +3,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GameService } from '../services/game.service';
 import { Game } from '../game.model';
+import { Router} from "@angular/router";
 
 @Component({
   selector: 'app-game-modal',
@@ -11,15 +12,36 @@ import { Game } from '../game.model';
 })
 export class GameModalComponent implements OnInit {
   gameForm!: FormGroup;
+  type: string = '';
+  gameId: string = ''
 
   constructor(
     private modalCtrl: ModalController,
     private fb: FormBuilder,
     private gameService: GameService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private router: Router,
   ) {}
 
   ngOnInit() {
+    if (this.type === 'edit' && this.gameId) {
+      this.gameService.getGame(this.gameId).subscribe(
+        (game) => {
+          console.log(game)
+          this.gameForm.patchValue({
+            title: game.title,
+            year: game.year,
+            imageUrl: game.imageUrl,
+            posterUrl: game.posterUrl,
+            description: game.description
+          });
+        },
+        (error) => {
+          console.error('Failed to fetch game data:', error);
+        }
+      );
+    }
+
     this.gameForm = this.fb.group({
       title: ['', Validators.required],
       year: ['', [Validators.required, Validators.min(1950)]],
@@ -33,10 +55,21 @@ export class GameModalComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  async presentAlert() {
+  async presentAddAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Success',
       message: 'Game added successfully!',
+      buttons: ['OK'],
+      cssClass: 'custom-alert'
+    });
+
+    await alert.present();
+  }
+
+  async presentEditAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Success',
+      message: 'Game edited successfully!',
       buttons: ['OK'],
       cssClass: 'custom-alert'
     });
@@ -58,12 +91,27 @@ export class GameModalComponent implements OnInit {
       description: this.gameForm.value.description,
       rating: 0
     };
-
-    this.gameService.addGame(newGame).subscribe(() => {
-      this.presentAlert().then(() => {
-        this.resetForm();
+    if(this.type === 'add'){
+      this.gameService.addGame(newGame).subscribe(() => {
+        this.presentAddAlert().then(() => {
+          this.resetForm();
+        });
       });
-    });
+    }else if(this.type === 'edit'){
+      this.gameService.editGame(this.gameId, newGame).subscribe(() => {
+        this.modalCtrl.dismiss()
+        this.refresh();
+        this.presentEditAlert().then(() => {
+          this.resetForm();
+        });
+      });
+    }
+  }
+
+  refresh() {
+    const currentUrl = this.router.url;
+    const baseUrl = currentUrl.split('/',2)[1]
+    this.router.navigateByUrl(`/${baseUrl}`);
   }
 
   resetForm() {

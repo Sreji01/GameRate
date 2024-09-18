@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title color="secondary">Add a Game</ion-title>
+    <ion-title color="secondary" *ngIf="this.type ==='add'">Add a Game</ion-title>
+    <ion-title color="secondary" *ngIf="this.type ==='edit'">Edit a Game</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">
         <ion-icon name="close-circle-outline" color="primary" class="close-modal-icon"></ion-icon>
@@ -82,9 +83,14 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="ion-justify-content-center">
+      <ion-row class="ion-justify-content-center" *ngIf="type === 'add'">
         <ion-col size-xs="10" size-md="7" size-lg="6" size-xl="6" size-sm="3">
           <ion-button type="submit" color="primary" shape="round" expand="block" [disabled]="gameForm.invalid">Add Game</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center" *ngIf="type === 'edit'">
+        <ion-col size-xs="10" size-md="7" size-lg="6" size-xl="6" size-sm="3">
+          <ion-button type="submit" color="primary" shape="round" expand="block" [disabled]="gameForm.invalid">Edit Game</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
