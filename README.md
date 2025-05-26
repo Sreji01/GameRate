@@ -1,2 +1,2 @@
-# Mobilno_rac_projekat
-Aplikacija sluzi za ocenjivanje i ostavljanje recenzija za veliki broj anime-a. Korisnik je u mogucnosti da ostavi naslov i sadrzaj recenzije ukoliko zeli, ili samo da ostavi ocenu. Takodje, korisnik moze da doda anime u svoju watchlist-u ukoliko ima nameru da ga odgleda. Postoji i mogucnost za pretrazivanje anime serijala po naslovu, i brzo dodavanje recenzije preko modal-a.
+# GameRate
+This mobile app allows users to rate video games, with each game’s overall rating dynamically updated based on user reviews. Users can create personalized playlists of their favorite games and easily search the database to discover new titles. Built using Angular and Ionic to deliver a smooth, cross-platform mobile experience, with Firebase used for real-time database storage, user authentication, and data synchronization. The app is designed for a seamless and engaging user experience, encouraging community interaction and game exploration.
